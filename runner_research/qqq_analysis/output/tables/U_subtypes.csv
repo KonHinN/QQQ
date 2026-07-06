@@ -1,0 +1,7 @@
+split,state,n,med_bps,hit_pct
+below_pdl,True,32,14.9,59.4
+below_pdl,False,15,11.8,60.0
+prior_day_up,True,27,12.3,59.3
+prior_day_up,False,20,13.6,60.0
+after_up3,True,8,33.5,75.0
+after_up3,False,39,11.8,56.4

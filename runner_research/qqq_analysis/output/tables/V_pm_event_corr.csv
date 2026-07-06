@@ -1,0 +1,5 @@
+feature,spearman_r,p,n
+open_pos_pm,0.31,0.0342,47
+pm_ret_pct,-0.165,0.2684,47
+pm_vol_ratio,0.188,0.2165,45
+pm_range_pct,0.153,0.3046,47

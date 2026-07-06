@@ -1,0 +1,4 @@
+group,n_trades,n_long,med_bps,mean_bps,hit_pct
+event,11.0,10.0,29.5,32.3,81.8
+non_event,50.0,40.0,8.4,5.0,58.0
+event days w/ system trade: 11/47,,,,,

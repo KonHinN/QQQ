@@ -1,0 +1,100 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gap-Down Bounce Playbook — QQQ</title>
+<style>
+  :root{--bg:#0b0e11;--panel:#12161c;--grid:#1e2630;--fg:#c9d1d9;--dim:#7d8895;--faint:#5c6773}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:Consolas,Menlo,'SF Mono',monospace;padding:34px 4vw 60px}
+  .wrap{max-width:1150px;margin:0 auto}
+  .kicker{color:#ffb74d;letter-spacing:3px;font-size:12px}
+  h1{font-size:clamp(26px,4vw,44px);margin:.2em 0 .1em;line-height:1.08}
+  .sub{color:var(--dim);font-size:15px;line-height:1.6;max-width:820px}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px;margin-top:26px}
+  .step{background:var(--panel);border:1px solid var(--grid);border-radius:14px;padding:18px 20px;position:relative}
+  .step .no{position:absolute;top:-12px;left:16px;background:#ffb74d;color:#000;font-weight:700;border-radius:8px;padding:2px 10px;font-size:13px}
+  .step h3{margin:6px 0 8px;font-size:17px}
+  .step p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.6}
+  .big{font-size:22px;color:#fff;font-weight:700}
+  b{color:#fff}
+  .statrow{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
+  .stat{background:var(--panel);border:1px solid var(--grid);border-radius:10px;padding:12px 18px;min-width:140px}
+  .stat span{display:block;font-size:23px;color:#26a69a;font-weight:700}
+  .stat small{color:var(--faint);font-size:11px;letter-spacing:1px}
+  .warn{background:rgba(239,83,80,.08);border:1px solid rgba(239,83,80,.45);border-radius:14px;padding:16px 20px;margin-top:26px}
+  .warn h3{color:#ef5350;margin:0 0 8px;font-size:16px}
+  .warn p{color:var(--dim);font-size:13.5px;line-height:1.65;margin:6px 0}
+  .note{color:var(--faint);font-size:12px;margin-top:18px;line-height:1.6}
+  h2{font-size:20px;margin:34px 0 6px;color:#e8eef4}
+  table{border-collapse:collapse;margin-top:10px;font-size:13px}
+  td,th{border:1px solid var(--grid);padding:6px 12px;text-align:right;color:var(--dim)}
+  th{color:#c9d1d9;background:var(--panel)}
+  td:first-child,th:first-child{text-align:left}
+</style></head><body><div class="wrap">
+<div class="kicker">QQQ · GAP-DOWN BOUNCE · ANALYSES S/T/U · 247 DAYS 2025-26 · IN-SAMPLE</div>
+<h1>The Gap-Down Bounce</h1>
+<p class="sub">When QQQ opens well below yesterday's close, the day's biggest up-leg usually starts
+in the first half hour and tops out early afternoon. One rule-set, measured end to end, costs included.
+<b>Every number is one in-sample year — see the red box before risking a dollar.</b></p>
+
+<div class="steps">
+  <div class="step"><div class="no">1 · SETUP (premarket)</div>
+    <h3>Gap ≤ <span class="big">−0.35×</span> yesterday's range</h3>
+    <p>Overnight gap (open vs yesterday's RTH close) at or below −0.35× yesterday's high−low.
+    Median qualifying gap -0.82%. Fires ~<b>4×/month</b> (47/247 days).
+    No other filter earned its place: below-PDL vs inside-range, prior day up vs down — all flat.</p></div>
+  <div class="step"><div class="no">2 · ENTRY</div>
+    <h3>Buy the <span class="big">10:00</span> close. Don't wait for green.</h3>
+    <p>The bounce low is set by 10:00 on 63.8% of event days.
+    Demanding price back above the open first <i>costs</i> edge: still-red-at-10:00 entries made
+    +23.2 bps median vs +10.7 for already-green (n=19/28).
+    Weakness is the product.</p></div>
+  <div class="step"><div class="no">3 · STOP</div>
+    <h3><span class="big">−1.0%</span> from entry, hard</h3>
+    <p>Winning days' MAE below the entry: P75 = 0.54%, P90 = 0.74%.
+    Losers run to 1.29%+. A 1% stop catches only the dumps
+    (6/47 days stopped) and caps the worst day at −100 bps (was −131 unstopped).
+    Tighter kills it: 0.5% stops out 20/47 and flips H2 negative.</p></div>
+  <div class="step"><div class="no">4 · EXIT</div>
+    <h3><span class="big">13:30</span>, no exceptions</h3>
+    <p>The up-leg tops out at median 13:23 on event days. Exit ladder (median net bps):
+    11:00 → +1.8 · 12:00 → +13.2 ·
+    <b>13:30 → +20.2</b> · close → +12.3.
+    Holding to the close gives back half the move.</p></div>
+</div>
+
+<div class="statrow">
+  <div class="stat"><span>+20.2</span><small>MEDIAN BPS / TRADE (NET)</small></div>
+  <div class="stat"><span>+13.0</span><small>MEAN BPS (fat tail capped)</small></div>
+  <div class="stat"><span>60%</span><small>HIT RATE</small></div>
+  <div class="stat"><span>+16.8 / +21.1</span><small>H1 / H2 MEDIAN — SAME SIGN</small></div>
+  <div class="stat"><span>−100</span><small>WORST DAY, BPS (stopped)</small></div>
+  <div class="stat"><span>~4/mo</span><small>TRADE FREQUENCY</small></div>
+</div>
+
+<h2>If the OR30 system also fires — prefer it</h2>
+<p class="sub">On event days where the OR30 break→pullback system triggered, its trades ran
+<b>+29.5 bps median at 82% hit</b> (n=11, 10 long) —
+better entry, tighter structure. But it only fires on 11/47 event days;
+this time-rule playbook covers the rest. Never run both on the same day (one QQQ day-position max).</p>
+
+<h2>Monthly ledger (honesty)</h2>
+<table><tr><th>month</th><th>25-07</th><th>25-08</th><th>25-09</th><th>25-10</th><th>25-11</th><th>25-12</th><th>26-01</th><th>26-02</th><th>26-03</th><th>26-04</th><th>26-05</th><th>26-06</th></tr>
+<tr><td>trades</td><td>2</td><td>3</td><td>3</td><td>3</td><td>4</td><td>5</td><td>3</td><td>3</td><td>9</td><td>4</td><td>4</td><td>4</td></tr>
+<tr><td>med bps*</td><td style='color:#ef5350'>-14</td><td style='color:#ef5350'>-8</td><td style='color:#26a69a'>+53</td><td style='color:#26a69a'>+76</td><td style='color:#ef5350'>-52</td><td style='color:#26a69a'>+12</td><td style='color:#26a69a'>+21</td><td style='color:#26a69a'>+44</td><td style='color:#ef5350'>-11</td><td style='color:#26a69a'>+98</td><td style='color:#26a69a'>+21</td><td style='color:#ef5350'>-89</td></tr></table>
+<p class="note">*unstopped open→close basis (U5) — lumpy, with real losing months. The stop repairs the
+tail, not the frequency of red months. 2–5 trades/month means quarterly P&L is noise-dominated.</p>
+
+<div class="warn"><h3>⚠ READ BEFORE RISKING MONEY</h3>
+<p>1 · <b>All in-sample.</b> The event definition, entry, stop and exit were all found on this same
+2025-26 year. This is a hypothesis sheet, not a proven system.</p>
+<p>2 · <b>It rhymes with the regime.</b> QQQ drifted +32% this year; "buy weakness" is what such a
+year pays by construction. The 2022 bear year is the acid test — this playbook goes live only if the
+edge survives there (HANDOFF §6, item 1 + 5a).</p>
+<p>3 · <b>n = 47.</b> Forty-seven events. One bad regime-month can erase a quarter's expectancy.
+Risk sizing: treat like the R-system — ≤1% equity risk per trade against the 1% stop.</p>
+<p>4 · <b>Costs modelled at 1 tick/side.</b> Slippage on a gap-down open can be worse; the 10:00
+entry (not the open) is partly there to dodge the worst spread window.</p></div>
+
+<p class="note">Sources: tables/S_runner_gap_buckets.csv · T_gapfade_*.csv · U_*.csv ·
+rebuild: python runners.py && python gapfade.py && python gap_playbook.py && python gap_playbook_page.py</p>
+</div></body></html>

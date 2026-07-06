@@ -1,0 +1,7 @@
+checkpoint,state,n,med_bps,hit_pct,base_med,base_hit
+above_open_1000,True,28,10.7,60.7,12.3,59.6
+above_open_1000,False,19,23.2,57.9,12.3,59.6
+off_low_1000,True,24,10.9,54.2,12.3,59.6
+off_low_1000,False,23,18.4,65.2,12.3,59.6
+red_first15,True,22,23.7,54.5,12.3,59.6
+red_first15,False,25,11.8,64.0,12.3,59.6
