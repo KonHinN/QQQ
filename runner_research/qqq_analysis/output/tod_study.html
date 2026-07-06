@@ -112,6 +112,17 @@ svg{width:100%;height:auto;display:block} svg text{font-family:inherit}
     </div>
   </section>
 
+  <section class="panel">
+    <div class="kicker">05 &middot; The best up-leg of the day &mdash; when is it born?</div>
+    <h2>In the first 15 minutes, more than anywhere else</h2>
+    <div class="take">The day's biggest low&rarr;high run starts (its low prints) in the <b>09:30&ndash;09:45 window on 35%</b> of days &mdash;
+      before 10:00 on <b>46%</b> (43&ndash;50 in every year) &middot; before 10:30 on 60% &middot; after 14:00 on just 6%. It tops out around <b>14:30</b> median.</div>
+    <div id="upleg"></div>
+    <div class="take" style="margin-top:12px">By weekday &mdash; mild but repeatable leans, not laws:
+      <b>Monday starts earliest and runs smallest</b> (both 7/8 years); Wed/Thu run largest (6/8 years). None survive strict multiplicity.</div>
+    <div style="overflow-x:auto"><table id="wdtab" style="border-collapse:collapse;font-size:12px;width:100%"></table></div>
+  </section>
+
   <div class="honesty">⚠ Also checked: a close micro-script (15:51 negative in 7/8 years, 15:57 positive in 7/8) — real but sub-basis-point,
     below round-trip costs; a curiosity, not a trade. Magnitudes (bps, leg size) shift with regime — only the <b>shapes and timings</b> are portable.
     Practical read: time-of-day tells you when to expect movement, liquidity, and extremes — direction must come from somewhere else.</div>
@@ -223,10 +234,48 @@ function hodlod(){
   el.appendChild(svg);
 }
 
+const U = {"years": ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025+"], "labels": ["09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45"], "start_hist": {"2018": [34.8, 10.2, 6.6, 5.3, 6.6, 5.3, 4.1, 2.5, 2.0, 1.6, 1.6, 0.8, 0.8, 1.6, 2.5, 1.2, 2.5, 0.4, 1.6, 2.5, 1.6, 1.2, 1.6, 0.0, 0.4, 0.4], "2019": [33.6, 10.9, 15.0, 4.5, 4.0, 4.5, 1.6, 1.6, 3.2, 3.6, 2.4, 2.4, 1.2, 2.0, 2.4, 0.8, 0.4, 0.8, 1.2, 0.0, 1.2, 0.8, 0.8, 0.0, 0.8, 0.0], "2020": [38.4, 11.4, 6.1, 4.1, 5.3, 5.3, 4.9, 3.3, 3.7, 2.9, 0.8, 2.0, 1.2, 0.8, 0.0, 0.4, 2.4, 0.8, 1.2, 1.2, 1.6, 0.0, 0.8, 0.4, 0.8, 0.0], "2021": [38.6, 7.2, 7.6, 6.4, 6.0, 3.6, 3.2, 4.0, 3.2, 4.0, 2.0, 2.4, 0.8, 1.2, 1.2, 1.2, 2.4, 0.4, 1.6, 0.8, 0.0, 1.2, 0.4, 0.4, 0.0, 0.0], "2022": [33.9, 9.7, 10.1, 4.0, 5.6, 4.0, 3.6, 4.0, 2.8, 1.6, 0.0, 4.0, 2.4, 3.2, 0.4, 1.2, 1.2, 1.6, 0.8, 1.2, 2.8, 0.8, 0.0, 0.0, 0.8, 0.0], "2023": [35.4, 10.2, 7.7, 5.3, 7.7, 4.1, 3.3, 2.0, 3.7, 4.1, 1.6, 0.8, 0.8, 1.2, 1.2, 1.6, 2.4, 1.2, 2.0, 0.4, 1.6, 0.8, 0.0, 0.4, 0.4, 0.0], "2024": [31.6, 13.4, 11.3, 3.6, 3.6, 4.5, 5.3, 2.0, 2.0, 0.8, 2.8, 1.6, 2.0, 1.6, 2.0, 1.6, 1.2, 0.4, 1.6, 1.6, 1.6, 1.2, 0.8, 0.4, 0.4, 0.8], "2025+": [34.4, 14.2, 7.3, 5.3, 5.3, 4.5, 4.9, 1.6, 4.5, 2.0, 1.6, 0.4, 0.8, 2.4, 1.2, 1.6, 2.0, 2.0, 0.4, 0.8, 0.8, 0.8, 0.0, 0.8, 0.4, 0.0]}, "pooled_start": [35.1, 10.9, 9.0, 4.8, 5.5, 4.5, 3.9, 2.6, 3.1, 2.6, 1.6, 1.8, 1.3, 1.8, 1.4, 1.2, 1.8, 1.0, 1.3, 1.1, 1.4, 0.9, 0.6, 0.3, 0.5, 0.2], "pooled_end": [0.6, 1.5, 2.4, 2.8, 3.0, 2.2, 3.1, 3.0, 2.5, 2.2, 3.1, 2.3, 1.9, 2.4, 2.7, 2.3, 2.1, 3.2, 3.4, 2.5, 4.0, 4.1, 5.3, 4.9, 7.0, 25.3], "weekday": [{"weekday": "Mon", "n": 370, "med_size_bps": 98.0, "yrs_size_above_med": "1/8", "start_lt_10": 52.4, "start_lt_1030": 64.9, "med_start": "09:55", "med_end": "14:31", "end_after_15": 42.7}, {"weekday": "Tue", "n": 407, "med_size_bps": 100.0, "yrs_size_above_med": "3/8", "start_lt_10": 45.2, "start_lt_1030": 58.5, "med_start": "10:06", "med_end": "14:30", "end_after_15": 41.8}, {"weekday": "Wed", "n": 405, "med_size_bps": 106.0, "yrs_size_above_med": "6/8", "start_lt_10": 40.7, "start_lt_1030": 56.5, "med_start": "10:13", "med_end": "14:36", "end_after_15": 43.5}, {"weekday": "Thu", "n": 399, "med_size_bps": 109.0, "yrs_size_above_med": "6/8", "start_lt_10": 44.6, "start_lt_1030": 59.1, "med_start": "10:09", "med_end": "14:31", "end_after_15": 41.9}, {"weekday": "Fri", "n": 392, "med_size_bps": 104.0, "yrs_size_above_med": "3/8", "start_lt_10": 47.4, "start_lt_1030": 60.2, "med_start": "10:02", "med_end": "14:17", "end_after_15": 42.9}], "wd_start": {"Mon": [41.4, 11.1, 6.5, 5.9, 5.4, 4.3, 4.3, 2.4, 3.8, 1.6, 0.8, 2.2, 1.4, 0.8, 1.6, 0.8, 0.8, 0.8, 0.3, 0.3, 1.6, 0.5, 0.8, 0.3, 0.3, 0.0], "Tue": [33.9, 11.3, 9.1, 4.2, 5.4, 4.4, 3.2, 2.2, 4.2, 3.4, 2.2, 2.5, 1.5, 1.0, 1.7, 0.7, 1.7, 1.2, 1.7, 0.7, 1.2, 0.5, 0.5, 0.2, 0.7, 0.5], "Wed": [30.6, 10.1, 10.4, 5.4, 5.4, 5.2, 2.7, 2.2, 3.2, 3.0, 3.2, 2.0, 1.2, 1.7, 1.0, 1.7, 1.2, 0.7, 2.7, 1.0, 2.0, 1.5, 0.5, 0.7, 0.2, 0.2], "Thu": [33.6, 11.0, 10.0, 4.5, 7.5, 3.8, 4.5, 4.0, 1.5, 2.0, 1.5, 0.8, 1.0, 3.0, 1.3, 1.0, 2.5, 1.0, 1.3, 2.0, 0.5, 1.0, 0.3, 0.0, 0.5, 0.0], "Fri": [36.5, 11.0, 8.7, 4.1, 3.8, 4.6, 4.6, 2.3, 3.1, 2.8, 0.3, 1.8, 1.3, 2.3, 1.3, 1.8, 2.8, 1.0, 0.5, 1.3, 1.8, 0.8, 0.8, 0.3, 0.8, 0.0]}, "start_by_10": 46.0, "start_by_1030": 59.8, "start_by_10_yr": [45.1, 44.5, 49.8, 45.8, 43.5, 45.5, 44.9, 48.6]};
+function upleg(){
+  const el=document.getElementById("upleg"); el.innerHTML="";
+  const W=1040,H=240,pL=46,pR=10,pT=14,pB=26;
+  const top=Math.max(...U.pooled_start)*1.08;
+  const Y=v=>H-pB-v/top*(H-pT-pB);
+  const svg=S("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Up-leg start time histogram"});
+  [10,20,30].forEach(v=>{ if(Y(v)>pT){svg.appendChild(S("line",{x1:pL,y1:Y(v),x2:W-pR,y2:Y(v),stroke:css("--line")}));
+    const t=S("text",{x:pL-8,y:Y(v)+4,"font-size":10.5,fill:css("--faint"),"text-anchor":"end"});t.textContent=v+"%";svg.appendChild(t);}});
+  const uy=Y(100/26);
+  svg.appendChild(S("line",{x1:pL,y1:uy,x2:W-pR,y2:uy,stroke:css("--faint"),"stroke-dasharray":"3,4",opacity:.6}));
+  const ut=S("text",{x:W-pR-4,y:uy-5,"font-size":9.5,fill:css("--faint"),"text-anchor":"end"});ut.textContent="uniform 3.8%";svg.appendChild(ut);
+  const slot=(W-pL-pR)/26, bw=Math.min(28,slot-8);
+  U.pooled_start.forEach((v,b)=>{
+    const x=pL+b*slot+(slot-bw)/2;
+    const r=S("rect",{x,y:Y(v),width:bw,height:Math.max(1.5,H-pB-Y(v)),fill:b<2?css("--pos"):css("--neu"),rx:2,opacity:b<2?1:.8});
+    r.addEventListener("mousemove",e=>{
+      const yrs=U.years.map(yy=>U.start_hist[yy][b]);
+      tip.innerHTML=`<div class="h">${U.labels[b]} slot</div>best up-leg starts here <b>${v.toFixed(1)}%</b> of days<br><span class="h">yearly ${Math.min(...yrs).toFixed(0)}–${Math.max(...yrs).toFixed(0)}%</span>`;
+      tip.style.opacity=1;let xx=e.clientX+14;if(xx+tip.offsetWidth>innerWidth-8)xx=e.clientX-tip.offsetWidth-14;
+      tip.style.left=xx+"px";tip.style.top=(e.clientY+14)+"px";});
+    r.addEventListener("mouseleave",()=>tip.style.opacity=0);
+    svg.appendChild(r);
+    if(b%4===0){const t=S("text",{x:x+bw/2,y:H-8,"font-size":10,fill:css("--faint"),"text-anchor":"middle"});
+      t.textContent=U.labels[b];svg.appendChild(t);}
+  });
+  const lab=S("text",{x:pL+slot+14,y:Y(U.pooled_start[0])+12,"font-size":11.5,fill:css("--pos"),"font-weight":"700"});
+  lab.textContent="35% in the first 15 min";svg.appendChild(lab);
+  el.appendChild(svg);
+
+  const cols=["weekday","n","med start","start <10:00","med size (bps)","size vs year median"];
+  document.getElementById("wdtab").innerHTML =
+    "<tr>"+cols.map(c=>`<th style="border:1px solid var(--line);padding:5px 10px;color:var(--ink);text-align:right">${c}</th>`).join("")+"</tr>"+
+    U.weekday.map(r=>{
+      const hl=r.weekday==="Mon";
+      return `<tr>${[r.weekday,r.n,r.med_start,r.start_lt_10+"%",r.med_size_bps,"above in "+r.yrs_size_above_med+" yrs"]
+        .map((v,i)=>`<td style="border:1px solid var(--line);padding:5px 10px;text-align:right;color:${hl?"var(--hitext)":"var(--dim)"}${i===0?";font-weight:700":""}">${v}</td>`).join("")}</tr>`;}).join("");
+}
 function renderAll(){
   curveChart("smile", D.smile, 1, "median |1-min move|, × own midday", "×");
   curveChart("volu", D.volu, 0, "minute's share of day volume, × own midday", "×");
-  drift(); hodlod();
+  drift(); hodlod(); upleg();
 }
 renderAll();
 new MutationObserver(renderAll).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
