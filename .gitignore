@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+
+# Regenerable binary intermediates (rebuild with `python ingest.py`)
+*.parquet
+
+# Secrets — never commit API keys / credentials
+.env
+.env.*
+*.key
+secrets*.json
