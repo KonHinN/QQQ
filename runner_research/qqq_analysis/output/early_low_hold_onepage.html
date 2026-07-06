@@ -1,0 +1,280 @@
+<!doctype html><html><head><meta charset="utf-8"></head><body>
+<title>Early-Low Hold — One-Page Playbook</title>
+<style>
+:root{
+  --bg:#0b0e11; --panel:#12161c; --line:#1e2630; --ink:#c9d1d9; --dim:#7d8895; --faint:#5c6773;
+  --pos:#26a69a; --neg:#ef5350; --hi:#cb791d; --hitext:#ffb74d; --neu:#7d8895;
+  --pos-soft:rgba(38,166,154,.13); --neg-soft:rgba(239,83,80,.10); --hi-soft:rgba(203,121,29,.14);
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f2f4f5; --panel:#fbfcfd; --line:#dde3e8; --ink:#1c2530; --dim:#5f6b76; --faint:#8a949d;
+    --pos:#0d8f7c; --neg:#c9403d; --hi:#a8690f; --hitext:#a8690f; --neu:#66717c;
+    --pos-soft:rgba(13,143,124,.10); --neg-soft:rgba(201,64,61,.08); --hi-soft:rgba(168,105,15,.12); }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0e11; --panel:#12161c; --line:#1e2630; --ink:#c9d1d9; --dim:#7d8895; --faint:#5c6773;
+  --pos:#26a69a; --neg:#ef5350; --hi:#cb791d; --hitext:#ffb74d; --neu:#7d8895;
+  --pos-soft:rgba(38,166,154,.13); --neg-soft:rgba(239,83,80,.10); --hi-soft:rgba(203,121,29,.14);
+}
+:root[data-theme="light"]{
+  --bg:#f2f4f5; --panel:#fbfcfd; --line:#dde3e8; --ink:#1c2530; --dim:#5f6b76; --faint:#8a949d;
+  --pos:#0d8f7c; --neg:#c9403d; --hi:#a8690f; --hitext:#a8690f; --neu:#66717c;
+  --pos-soft:rgba(13,143,124,.10); --neg-soft:rgba(201,64,61,.08); --hi-soft:rgba(168,105,15,.12); }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:ui-monospace,"SF Mono","Cascadia Code",Consolas,Menlo,monospace;
+  font-variant-numeric:tabular-nums;line-height:1.4;padding:24px 3vw 40px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.kicker{color:var(--hitext);letter-spacing:3px;font-size:11px;text-transform:uppercase}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap}
+h1{font-size:clamp(23px,3.4vw,32px);margin:2px 0 0;letter-spacing:-.5px}
+.sub{color:var(--dim);font-size:12px;margin-top:3px}
+.badge{border:1px solid var(--pos);color:var(--pos);border-radius:999px;padding:5px 14px;
+  font-size:11px;letter-spacing:1.5px;background:var(--pos-soft);white-space:nowrap}
+.ribbon{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 18px 8px}
+svg{width:100%;height:auto;display:block} svg text{font-family:inherit}
+.grid{display:grid;grid-template-columns:1.12fr 1fr 1fr;gap:11px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px;
+  border-top:3px solid var(--edge,var(--line))}
+.card h2{font-size:12px;margin:0 0 9px;letter-spacing:2px;color:var(--dim);text-transform:uppercase}
+.check{display:flex;gap:11px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.check:last-of-type{border-bottom:0}
+.box{width:20px;height:20px;border:2px solid var(--pos);border-radius:5px;flex:none;
+  color:var(--pos);font-size:13px;line-height:16px;text-align:center;font-weight:700}
+.check small{display:block;color:var(--faint);font-size:11px;margin-top:2px}
+.then{margin-top:9px;background:var(--pos-soft);border:1px solid var(--pos);border-radius:8px;
+  padding:8px 12px;font-weight:700;font-size:13.5px;color:var(--pos);text-align:center}
+.rule{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.rule:last-child{border-bottom:0}
+.rule .k{color:var(--dim)} .rule .v{font-weight:700;text-align:right}
+.v.pos{color:var(--pos)} .v.neg{color:var(--neg)} .v.hi{color:var(--hitext)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.tile{border:1px solid var(--line);border-radius:9px;padding:8px 11px}
+.tile .n{font-size:20px;font-weight:700}
+.tile .l{font-size:10px;color:var(--faint);letter-spacing:.5px;text-transform:uppercase;margin-top:1px}
+.tile.wide{grid-column:1/-1}
+.ex2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:860px){.ex2{grid-template-columns:1fr}}
+.exhead{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:var(--ink);margin-bottom:2px}
+.exhead .r{font-weight:700}
+.exleg{display:flex;gap:16px;font-size:11px;color:var(--faint);margin:-2px 0 6px}
+.exleg i{font-style:normal}
+.donts{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:9px}
+.dont{border:1px solid var(--line);border-left:3px solid var(--neg);border-radius:9px;
+  padding:8px 13px;font-size:12px;background:var(--neg-soft)}
+.dont b{color:var(--neg);display:block;font-size:11.5px;letter-spacing:1px;margin-bottom:2px}
+.foot{color:var(--faint);font-size:11px;border-top:1px solid var(--line);padding-top:9px}
+.foot b{color:var(--dim)}
+#tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);
+  border-radius:8px;padding:6px 10px;font-size:11.5px;color:var(--ink);opacity:0;z-index:9;
+  box-shadow:0 4px 18px rgba(0,0,0,.35)}
+#tip .h{color:var(--dim);font-size:10.5px}
+@media (prefers-reduced-motion:no-preference){ #tip{transition:opacity .1s} }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="kicker">QQQ + SPY only · intraday long · flat by close</div>
+      <h1>THE EARLY-LOW HOLD</h1>
+      <div class="sub">one decision per day at 11:00 ET · works 10:30→13:00, 11:00 is the sweet spot</div>
+    </div>
+    <div class="badge">VALIDATED 2018–2026 · 7/8 YEARS POSITIVE</div>
+  </header>
+
+  <div class="ribbon" id="ribbon"></div>
+
+  <div class="grid">
+    <div class="card" style="--edge:var(--pos)">
+      <h2>At 11:00 — three boxes</h2>
+      <div class="check"><span class="box">1</span><span>Day's low was set <b>before 10:00</b><small>when did today's LOD print?</small></span></div>
+      <div class="check"><span class="box">2</span><span>That low <b>still holds</b><small>nothing lower since</small></span></div>
+      <div class="check"><span class="box">3</span><span>Price <b>above session VWAP</b><small>VWAP from 09:30, not premarket</small></span></div>
+      <div class="then">ALL 3 ✓ → BUY at 11:00 · else NO TRADE</div>
+    </div>
+
+    <div class="card" style="--edge:var(--hi)">
+      <h2>The trade</h2>
+      <div class="rule"><span class="k">entry</span><span class="v">market @ 11:00 close</span></div>
+      <div class="rule"><span class="k">stop</span><span class="v neg">1-min close &lt; VWAP → out</span></div>
+      <div class="rule"><span class="k">target</span><span class="v hi">NONE — let it run</span></div>
+      <div class="rule"><span class="k">time exit</span><span class="v">15:57 flat, always</span></div>
+      <div class="rule"><span class="k">overnight</span><span class="v neg">never</span></div>
+      <div class="rule"><span class="k">shorts</span><span class="v neg">none — mirror tested, fails</span></div>
+    </div>
+
+    <div class="card" style="--edge:var(--line)">
+      <h2>Expect</h2>
+      <div class="tiles">
+        <div class="tile"><div class="n">~8<span style="font-size:13px;color:var(--faint)">/mo</span></div><div class="l">signals (98/yr)</div></div>
+        <div class="tile"><div class="n">32%</div><div class="l">win rate — normal</div></div>
+        <div class="tile"><div class="n" style="color:var(--pos)">+4.3<span style="font-size:12px"> bps</span></div><div class="l">avg / trade, net</div></div>
+        <div class="tile"><div class="n" style="color:var(--pos)">7/8</div><div class="l">years positive</div></div>
+        <div class="tile wide"><div class="n" style="font-size:14px;line-height:1.5">−1% … +8% <span style="color:var(--faint);font-size:12px">per year @1× notional</span></div><div class="l">worst yr 2019 · best 2023</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="--edge:var(--line)">
+    <h2>What it looks like — real QQQ days (2022)</h2>
+    <div class="exleg"><i style="color:var(--ink)">— price</i><i>--- session VWAP</i><i style="color:var(--pos)">▮ in the trade</i></div>
+    <div class="ex2">
+      <div><div class="exhead"><span>2022-10-13 · CPI-day reversal · the runner</span><span class="r" style="color:var(--pos)">+416 bps</span></div><div id="ex_win"></div></div>
+      <div><div class="exhead"><span>2022-11-04 · the stop</span><span class="r" style="color:var(--neg)">−40 bps</span></div><div id="ex_stop"></div></div>
+    </div>
+  </div>
+
+  <div class="ex2">
+    <div class="card" style="--edge:var(--line)">
+      <h2>The payoff shape — 786 trades</h2>
+      <div id="dist"></div>
+    </div>
+    <div class="card" style="--edge:var(--line)">
+      <h2>Robust to the clock — avg bps by check time</h2>
+      <div id="ladder"></div>
+    </div>
+  </div>
+
+  <div class="donts">
+    <div class="dont"><b>✗ NO PROFIT TARGET</b>capping at the old high kills the edge — tested, ≈ 0</div>
+    <div class="dont"><b>✗ NO SHORT MIRROR</b>early-high + below VWAP loses at every check time</div>
+    <div class="dont"><b>✗ NO IWM / SMALL CAPS</b>edge is zero outside QQQ &amp; SPY</div>
+    <div class="dont"><b>✗ NO MOVED STOPS, NO RE-ENTRY</b>one close below VWAP = done for the day</div>
+  </div>
+
+  <div class="foot"><b>Why trust it:</b> the condition (early low holds + above VWAP) pays at every check time 10:30–13:00 —
+    the edge is the condition, not the clock · trend-day lift replicated 21/21 symbol-years incl. the 2022 bear ·
+    fills pessimistic, 1 tick/side · ~+4%/yr unlevered · paper-trade first · re-score quarterly.</div>
+</div>
+<div id="tip"></div>
+
+<script>
+const DAYS = {"win": {"date": "2022-10-13", "close": [255.45, 255.31, 254.5, 255.06, 255.61, 255.0, 254.56, 254.88, 255.22, 255.0, 254.56, 255.55, 255.92, 255.39, 255.23, 255.29, 256.15, 256.25, 256.27, 256.68, 256.99, 256.67, 257.47, 257.78, 257.21, 256.95, 256.84, 256.85, 256.95, 257.48, 257.53, 257.58, 257.34, 257.31, 258.02, 258.34, 258.01, 257.74, 258.62, 258.7, 258.23, 258.46, 258.83, 258.9, 259.33, 259.13, 259.04, 259.07, 258.67, 258.17, 258.01, 258.21, 258.41, 258.04, 257.98, 257.75, 257.36, 257.25, 257.42, 257.37, 257.92, 257.79, 258.19, 257.91, 257.66, 257.59, 257.57, 258.26, 257.98, 258.27, 258.2, 258.67, 258.14, 258.54, 258.27, 258.83, 258.67, 258.77, 258.74, 259.0, 258.62, 258.31, 258.38, 258.23, 258.74, 258.95, 259.38, 259.11, 258.77, 258.5, 258.33, 258.37, 258.26, 258.53, 259.11, 259.51, 259.92, 260.48, 260.59, 261.22, 260.8, 260.96, 261.13, 261.56, 261.92, 261.63, 262.44, 263.89, 263.79, 263.73, 266.52, 265.42, 265.77, 264.56, 264.59, 264.01, 264.3, 264.57, 264.74, 264.9, 265.11, 264.68, 264.57, 264.86, 264.88, 265.52, 266.05, 266.11, 267.71, 267.98, 269.34, 268.16, 267.92, 267.27, 267.15, 266.43, 267.1, 266.9, 266.79, 266.56, 266.18, 266.49, 267.29, 266.99, 267.04, 266.9, 266.31, 266.91, 266.93, 266.83, 267.06, 266.87, 267.69, 267.5, 267.58, 266.76, 267.19, 266.76, 266.8, 266.61, 266.16, 265.62, 265.57, 265.57, 265.67, 265.97, 265.22, 264.97, 264.92, 265.03, 264.76, 264.87, 264.93, 265.43, 265.24, 265.19, 265.39, 265.22, 265.17, 264.98, 265.16, 265.23, 265.46, 265.38, 265.42, 265.46, 265.13, 265.15, 265.44, 265.07, 265.22, 265.78, 265.75, 266.11, 266.05, 265.66, 265.87, 265.54, 265.82, 266.13, 266.18, 266.4, 266.41, 266.2, 265.85, 266.05, 265.77, 265.82, 266.05, 266.06, 266.3, 266.24, 266.75, 266.96, 267.08, 267.08, 266.68, 266.9, 266.87, 266.61, 266.77, 266.76, 266.71, 266.32, 266.58, 266.75, 266.81, 266.82, 266.86, 267.01, 267.6, 267.77, 267.96, 267.96, 268.04, 267.88, 268.04, 268.51, 268.63, 268.32, 268.67, 268.56, 268.87, 269.05, 269.3, 269.1, 268.71, 268.95, 268.77, 268.79, 268.65, 268.61, 268.75, 268.49, 268.27, 267.91, 268.18, 268.04, 268.27, 268.3, 268.44, 268.26, 268.28, 268.38, 268.42, 268.39, 268.22, 268.39, 268.43, 268.43, 268.03, 268.37, 268.2, 268.08, 268.29, 268.3, 268.39, 267.89, 268.14, 267.99, 268.11, 267.77, 267.84, 267.93, 267.9, 268.17, 268.06, 267.93, 267.91, 268.03, 268.0, 267.97, 268.07, 268.05, 267.87, 267.63, 267.33, 266.98, 267.1, 266.96, 267.32, 267.4, 267.29, 267.29, 267.39, 267.44, 267.62, 267.99, 267.93, 268.0, 267.88, 267.94, 267.8, 268.19, 268.26, 268.25, 268.15, 268.28, 268.62, 268.44, 268.49, 268.48, 268.65, 268.62, 268.88, 268.87, 268.96, 269.24, 269.6, 269.3, 268.87, 268.95, 268.99, 269.03, 268.96, 269.17, 269.49, 269.81, 269.95, 270.1, 270.08, 270.1, 269.99, 269.75, 269.57, 269.42, 269.94, 269.82, 269.71, 269.58, 269.1, 269.17, 269.21, 269.24, 269.17, 269.23, 269.2, 269.18, 268.99, 268.95, 269.04, 269.46, 269.05, 268.32, 268.49, 268.42, 268.38, 268.04, 268.45, 268.54, 268.47, 268.56, 268.56, 268.81, 268.96, 268.98, 269.2, 269.26, 269.2, 269.07, 269.06, 269.23, 269.67, 269.67, 269.38, 269.15, 268.96, 269.09, 269.04, 268.75], "vwap": [255.17, 255.17, 255.11, 255.07, 255.11, 255.11, 255.08, 255.06, 255.06, 255.05, 255.03, 255.06, 255.1, 255.12, 255.12, 255.13, 255.16, 255.2, 255.27, 255.32, 255.38, 255.42, 255.47, 255.57, 255.64, 255.68, 255.71, 255.73, 255.74, 255.77, 255.81, 255.84, 255.87, 255.89, 255.95, 256.02, 256.08, 256.15, 256.23, 256.28, 256.33, 256.37, 256.42, 256.49, 256.53, 256.57, 256.61, 256.65, 256.69, 256.73, 256.79, 256.82, 256.83, 256.87, 256.87, 256.88, 256.9, 256.9, 256.9, 256.91, 256.92, 256.93, 256.94, 256.95, 256.95, 256.96, 256.97, 256.99, 256.99, 257.0, 257.01, 257.03, 257.03, 257.04, 257.05, 257.06, 257.08, 257.1, 257.12, 257.13, 257.15, 257.16, 257.17, 257.18, 257.18, 257.2, 257.23, 257.27, 257.28, 257.29, 257.3, 257.3, 257.31, 257.31, 257.33, 257.34, 257.38, 257.46, 257.49, 257.57, 257.6, 257.62, 257.64, 257.69, 257.72, 257.76, 257.8, 258.0, 258.12, 258.18, 258.42, 258.7, 258.79, 258.89, 258.96, 259.02, 259.06, 259.1, 259.13, 259.16, 259.2, 259.23, 259.26, 259.29, 259.31, 259.36, 259.44, 259.5, 259.62, 259.88, 260.01, 260.1, 260.17, 260.24, 260.28, 260.32, 260.36, 260.4, 260.42, 260.45, 260.48, 260.51, 260.54, 260.56, 260.57, 260.6, 260.62, 260.64, 260.66, 260.67, 260.69, 260.72, 260.79, 260.81, 260.83, 260.86, 260.91, 260.93, 260.94, 260.96, 260.98, 261.01, 261.03, 261.05, 261.08, 261.09, 261.11, 261.12, 261.13, 261.15, 261.17, 261.18, 261.2, 261.21, 261.23, 261.24, 261.25, 261.26, 261.26, 261.27, 261.27, 261.29, 261.31, 261.32, 261.32, 261.33, 261.34, 261.34, 261.35, 261.38, 261.38, 261.39, 261.4, 261.41, 261.42, 261.43, 261.43, 261.44, 261.44, 261.46, 261.46, 261.48, 261.49, 261.5, 261.51, 261.52, 261.52, 261.53, 261.53, 261.54, 261.55, 261.56, 261.57, 261.59, 261.6, 261.61, 261.62, 261.63, 261.63, 261.66, 261.66, 261.66, 261.67, 261.67, 261.68, 261.68, 261.69, 261.69, 261.7, 261.71, 261.73, 261.74, 261.78, 261.89, 261.92, 261.93, 261.94, 261.97, 261.99, 262.01, 262.05, 262.06, 262.08, 262.1, 262.12, 262.14, 262.16, 262.2, 262.22, 262.23, 262.24, 262.25, 262.27, 262.28, 262.29, 262.31, 262.32, 262.33, 262.34, 262.34, 262.35, 262.37, 262.37, 262.41, 262.42, 262.42, 262.43, 262.44, 262.46, 262.48, 262.49, 262.5, 262.51, 262.52, 262.52, 262.54, 262.54, 262.55, 262.56, 262.56, 262.57, 262.58, 262.59, 262.6, 262.61, 262.62, 262.63, 262.63, 262.64, 262.65, 262.66, 262.66, 262.67, 262.68, 262.68, 262.7, 262.71, 262.71, 262.72, 262.73, 262.76, 262.77, 262.77, 262.78, 262.79, 262.81, 262.83, 262.85, 262.86, 262.88, 262.89, 262.89, 262.89, 262.9, 262.91, 262.91, 262.92, 262.92, 262.93, 262.94, 262.95, 262.95, 262.96, 262.96, 262.98, 263.0, 263.01, 263.05, 263.07, 263.08, 263.13, 263.14, 263.15, 263.16, 263.16, 263.17, 263.19, 263.24, 263.27, 263.3, 263.32, 263.35, 263.39, 263.41, 263.44, 263.45, 263.46, 263.47, 263.47, 263.48, 263.51, 263.52, 263.53, 263.54, 263.54, 263.56, 263.57, 263.58, 263.59, 263.61, 263.62, 263.65, 263.7, 263.71, 263.72, 263.72, 263.73, 263.75, 263.76, 263.76, 263.77, 263.78, 263.78, 263.79, 263.8, 263.81, 263.83, 263.84, 263.85, 263.87, 263.88, 263.9, 263.91, 263.93, 263.95, 263.97, 263.99, 264.01, 264.03, 264.09], "lod_min": 3, "bps": 416.0}, "stop": {"date": "2022-11-04", "close": [265.92, 265.34, 264.31, 264.02, 263.94, 263.73, 263.44, 262.94, 262.93, 263.04, 262.55, 262.84, 262.52, 261.84, 260.95, 261.43, 261.75, 261.61, 261.35, 260.93, 261.11, 261.17, 261.26, 261.61, 261.86, 261.96, 262.79, 262.95, 263.07, 263.46, 263.82, 263.31, 263.69, 263.52, 263.26, 263.4, 263.31, 262.92, 262.68, 263.23, 263.09, 263.63, 264.27, 264.34, 264.53, 264.47, 264.83, 264.54, 264.31, 264.48, 264.64, 264.84, 265.08, 265.68, 265.66, 265.28, 265.4, 265.58, 265.82, 265.38, 265.6, 265.62, 265.53, 265.17, 265.26, 265.52, 265.23, 265.65, 265.58, 265.5, 265.99, 266.35, 265.78, 265.75, 265.75, 265.63, 265.42, 265.5, 265.59, 265.78, 265.46, 264.99, 264.51, 264.3, 264.35, 264.33, 264.72, 264.38, 264.17, 264.55, 264.93, 264.86, 264.8, 264.77, 264.53, 264.2, 264.3, 263.9, 263.89, 263.9, 263.84, 263.47, 263.52, 263.56, 263.62, 263.55, 263.73, 264.02, 263.97, 263.59, 263.89, 263.81, 264.11, 264.15, 264.2, 264.18, 263.77, 263.14, 262.96, 262.73, 262.92, 262.89, 262.91, 262.79, 262.72, 262.81, 262.9, 262.24, 262.42, 262.18, 261.85, 261.73, 261.43, 261.64, 261.62, 261.53, 261.42, 261.21, 261.12, 261.08, 260.72, 260.37, 260.33, 260.04, 260.47, 260.68, 260.58, 260.57, 260.48, 260.08, 260.48, 260.33, 260.04, 259.5, 259.66, 259.84, 259.86, 260.07, 260.36, 260.71, 260.8, 260.9, 260.55, 260.32, 260.82, 260.85, 261.01, 261.83, 262.11, 261.88, 261.73, 261.45, 261.25, 261.39, 261.49, 261.45, 261.49, 261.95, 261.86, 261.91, 261.55, 261.75, 261.64, 261.88, 262.06, 261.56, 261.39, 261.24, 261.0, 260.7, 260.22, 260.4, 260.81, 260.39, 260.45, 260.35, 260.1, 260.32, 260.21, 260.12, 260.4, 260.24, 260.04, 260.11, 260.38, 260.48, 260.24, 260.23, 260.43, 260.31, 260.15, 260.07, 260.05, 259.93, 260.41, 260.72, 260.74, 260.05, 259.85, 259.23, 259.76, 260.55, 260.57, 260.43, 260.74, 260.63, 260.37, 260.34, 260.41, 260.45, 260.27, 260.1, 260.46, 260.38, 260.47, 260.43, 260.25, 260.04, 260.14, 259.96, 259.71, 260.2, 259.84, 259.8, 259.73, 259.85, 259.94, 260.05, 260.16, 259.94, 259.73, 259.7, 259.66, 259.68, 259.7, 259.6, 259.8, 259.77, 259.9, 260.05, 259.84, 259.81, 259.89, 260.1, 260.06, 259.84, 259.67, 259.7, 259.66, 259.68, 259.7, 259.76, 259.88, 260.05, 259.62, 259.39, 259.16, 259.47, 259.44, 259.32, 259.39, 259.61, 259.43, 259.6, 259.61, 259.43, 259.54, 260.01, 260.48, 260.66, 260.53, 260.42, 260.7, 260.63, 260.77, 260.54, 260.75, 260.76, 261.11, 261.04, 260.8, 260.98, 261.08, 261.0, 260.99, 261.21, 260.88, 261.1, 261.36, 261.4, 261.45, 261.43, 261.77, 262.23, 262.39, 262.28, 262.34, 262.1, 262.0, 261.88, 262.1, 262.14, 262.11, 262.09, 262.19, 262.32, 262.65, 262.7, 262.69, 262.58, 262.25, 262.61, 262.56, 262.7, 262.61, 262.91, 262.78, 263.01, 263.18, 263.43, 263.63, 263.57, 263.83, 263.58, 263.62, 263.71, 263.58, 263.57, 263.62, 263.46, 263.1, 263.08, 262.87, 262.84, 262.79, 262.97, 263.18, 263.36, 263.46, 263.25, 263.02, 263.12, 263.23, 263.34, 263.8, 263.58, 263.25, 263.36, 263.42, 263.64, 263.45, 263.54, 263.48, 263.66, 264.23, 264.24, 264.51, 264.26, 264.04, 263.91, 263.62, 263.52, 263.7, 263.78, 263.81, 264.17, 264.2, 264.03, 264.16, 264.68], "vwap": [265.94, 265.86, 265.7, 265.57, 265.47, 265.34, 265.11, 264.99, 264.85, 264.76, 264.63, 264.54, 264.46, 264.32, 264.19, 263.96, 263.86, 263.8, 263.73, 263.58, 263.44, 263.32, 263.27, 263.22, 263.18, 263.15, 263.14, 263.13, 263.13, 263.13, 263.16, 263.21, 263.21, 263.22, 263.22, 263.22, 263.22, 263.22, 263.21, 263.21, 263.21, 263.22, 263.23, 263.26, 263.27, 263.29, 263.3, 263.32, 263.34, 263.35, 263.35, 263.36, 263.38, 263.41, 263.44, 263.47, 263.48, 263.5, 263.52, 263.54, 263.56, 263.58, 263.63, 263.64, 263.65, 263.66, 263.67, 263.68, 263.68, 263.69, 263.71, 263.74, 263.76, 263.77, 263.78, 263.79, 263.8, 263.81, 263.81, 263.83, 263.84, 263.85, 263.86, 263.87, 263.88, 263.88, 263.88, 263.89, 263.89, 263.89, 263.9, 263.92, 263.92, 263.93, 263.93, 263.93, 263.93, 263.93, 263.93, 263.93, 263.93, 263.93, 263.93, 263.93, 263.92, 263.92, 263.92, 263.92, 263.92, 263.92, 263.92, 263.92, 263.92, 263.92, 263.92, 263.92, 263.92, 263.92, 263.91, 263.9, 263.9, 263.89, 263.89, 263.88, 263.88, 263.88, 263.87, 263.86, 263.85, 263.84, 263.82, 263.81, 263.8, 263.79, 263.78, 263.78, 263.77, 263.76, 263.68, 263.68, 263.66, 263.63, 263.6, 263.56, 263.53, 263.51, 263.5, 263.49, 263.48, 263.47, 263.45, 263.44, 263.41, 263.38, 263.36, 263.34, 263.33, 263.32, 263.3, 263.28, 263.26, 263.26, 263.25, 263.24, 263.23, 263.21, 263.2, 263.18, 263.18, 263.17, 263.16, 263.15, 263.15, 263.14, 263.14, 263.14, 263.13, 263.12, 263.11, 263.11, 263.1, 263.1, 263.1, 263.1, 263.09, 263.09, 263.08, 263.08, 263.07, 263.06, 263.05, 263.03, 263.03, 263.02, 263.02, 263.01, 263.0, 263.0, 262.99, 262.99, 262.98, 262.98, 262.97, 262.96, 262.96, 262.95, 262.95, 262.95, 262.94, 262.94, 262.94, 262.93, 262.92, 262.92, 262.91, 262.9, 262.9, 262.89, 262.88, 262.86, 262.83, 262.82, 262.81, 262.8, 262.8, 262.8, 262.79, 262.79, 262.78, 262.78, 262.78, 262.77, 262.77, 262.77, 262.77, 262.76, 262.76, 262.76, 262.75, 262.75, 262.74, 262.74, 262.74, 262.73, 262.72, 262.72, 262.72, 262.71, 262.71, 262.71, 262.7, 262.7, 262.69, 262.69, 262.69, 262.68, 262.68, 262.68, 262.67, 262.67, 262.67, 262.66, 262.65, 262.65, 262.64, 262.64, 262.64, 262.63, 262.63, 262.63, 262.63, 262.62, 262.62, 262.61, 262.61, 262.6, 262.59, 262.59, 262.58, 262.58, 262.57, 262.57, 262.56, 262.56, 262.56, 262.56, 262.55, 262.55, 262.54, 262.53, 262.53, 262.52, 262.52, 262.52, 262.52, 262.51, 262.51, 262.51, 262.5, 262.5, 262.5, 262.5, 262.5, 262.49, 262.49, 262.49, 262.49, 262.48, 262.48, 262.48, 262.48, 262.48, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.47, 262.48, 262.48, 262.49, 262.49, 262.5, 262.5, 262.5, 262.5, 262.51, 262.51, 262.51, 262.51, 262.51, 262.51, 262.52, 262.52, 262.52, 262.52, 262.52, 262.52, 262.52, 262.52, 262.53, 262.53, 262.53, 262.53, 262.54, 262.54, 262.54, 262.54, 262.55, 262.55, 262.55, 262.55, 262.55, 262.56, 262.56, 262.57, 262.58, 262.58, 262.58, 262.59, 262.59, 262.59, 262.6, 262.6, 262.61, 262.61, 262.62, 262.63, 262.67], "lod_min": 19, "bps": -40.0}, "dist": [{"lo": -80.0, "hi": -30.0, "pct": 13.9}, {"lo": -30.0, "hi": -20.0, "pct": 14.0}, {"lo": -20.0, "hi": -10.0, "pct": 20.0}, {"lo": -10.0, "hi": -5.0, "pct": 13.1}, {"lo": -5.0, "hi": 0.0, "pct": 6.5}, {"lo": 0.0, "hi": 5.0, "pct": 2.8}, {"lo": 5.0, "hi": 10.0, "pct": 1.8}, {"lo": 10.0, "hi": 20.0, "pct": 3.6}, {"lo": 20.0, "hi": 40.0, "pct": 5.8}, {"lo": 40.0, "hi": 80.0, "pct": 11.3}, {"lo": 80.0, "hi": 150.0, "pct": 5.3}, {"lo": 150.0, "hi": 400.0, "pct": 1.9}], "ladder": [{"t": "10:30", "mean": 2.4, "n_yr": 115.0}, {"t": "11:00", "mean": 4.3, "n_yr": 98.0}, {"t": "11:30", "mean": 2.7, "n_yr": 94.0}, {"t": "12:00", "mean": 3.2, "n_yr": 90.0}, {"t": "13:00", "mean": 3.6, "n_yr": 82.0}], "stats": {"n": 786, "mean": 4.3, "win": 32.0}};
+const CHECK_T=90, FLAT_T=387;
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const S=(t,a)=>{const e=document.createElementNS("http://www.w3.org/2000/svg",t);for(const k in a)e.setAttribute(k,a[k]);return e};
+const tip=document.getElementById("tip");
+const clk=t=>{const tot=570+t;return `${String(Math.floor(tot/60)).padStart(2,"0")}:${String(tot%60).padStart(2,"0")}`;};
+
+function ribbon(){
+  const el=document.getElementById("ribbon"); el.innerHTML="";
+  const W=1040,H=112,y=60,x0=30,x1=W-30;
+  const svg=S("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Session timeline"});
+  const mins=t=>{const[h,m]=t.split(":").map(Number);return h*60+m};
+  const X=t=>x0+(mins(t)-570)/(960-570)*(x1-x0);
+  const zone=(a,b,fill)=>svg.appendChild(S("rect",{x:X(a),y:y-12,width:X(b)-X(a),height:24,fill,rx:6}));
+  zone("09:30","10:00",css("--neg-soft")); zone("11:00","15:57",css("--pos-soft"));
+  svg.appendChild(S("line",{x1:x0,y1:y,x2:x1,y2:y,stroke:css("--line"),"stroke-width":2}));
+  const stops=[["09:30","","",css("--faint")],["10:00","low must be in","by here",css("--neg")],
+    ["11:00","CHECK → BUY","the one decision",css("--pos")],["15:57","FLAT","no exceptions",css("--hitext")]];
+  for(const[t,top,bot,col]of stops){
+    const x=X(t);
+    svg.appendChild(S("circle",{cx:x,cy:y,r:t==="11:00"?7:5,fill:col,stroke:css("--panel"),"stroke-width":2}));
+    const anchor = x>x1-50?"end":(x<x0+50?"start":"middle");
+    const tt=S("text",{x,y:y-22,"font-size":t==="11:00"?13:11.5,fill:col,"text-anchor":anchor,"font-weight":"700"});
+    tt.textContent=top;svg.appendChild(tt);
+    const tm=S("text",{x,y:y+22,"font-size":10.5,fill:css("--faint"),"text-anchor":anchor});tm.textContent=t;svg.appendChild(tm);
+    if(bot){const b=S("text",{x,y:y+38,"font-size":10,fill:css("--dim"),"text-anchor":anchor});b.textContent=bot;svg.appendChild(b);}
+  }
+  el.appendChild(svg);
+}
+
+function exChart(id, day, kind){
+  const el=document.getElementById(id); el.innerHTML="";
+  const W=520,H=200,pL=8,pR=8,pT=10,pB=22;
+  const c=day.close, v=day.vwap;
+  let exitT=FLAT_T;
+  if(kind==="stop"){ for(let t=CHECK_T+1;t<=FLAT_T;t++){ if(c[t]<v[t]){exitT=t;break;} } }
+  const lo=Math.min(...c,...v), hi=Math.max(...c,...v), pad=(hi-lo)*0.06;
+  const X=t=>pL+t/389*(W-pL-pR);
+  const Y=p=>H-pB-(p-(lo-pad))/((hi+pad)-(lo-pad))*(H-pT-pB);
+  const svg=S("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":`Example ${kind} day ${day.date}`});
+  svg.appendChild(S("rect",{x:X(CHECK_T),y:pT,width:X(exitT)-X(CHECK_T),height:H-pT-pB,
+    fill:css(kind==="win"?"--pos-soft":"--neg-soft")}));
+  [[30,"10:00"],[90,"11:00"],[270,"14:00"]].forEach(([t,l])=>{
+    svg.appendChild(S("line",{x1:X(t),y1:pT,x2:X(t),y2:H-pB,stroke:css("--line"),"stroke-width":t===90?1.6:1}));
+    const tx=S("text",{x:X(t),y:H-7,"font-size":10,fill:css("--faint"),"text-anchor":"middle"});tx.textContent=l;svg.appendChild(tx);});
+  const pts=a=>a.map((p,t)=>`${X(t).toFixed(1)},${Y(p).toFixed(1)}`).join(" ");
+  svg.appendChild(S("polyline",{points:pts(v),fill:"none",stroke:css("--dim"),"stroke-width":1.3,"stroke-dasharray":"5,4",opacity:.85}));
+  svg.appendChild(S("polyline",{points:pts(c),fill:"none",stroke:css("--ink"),"stroke-width":1.8}));
+  const mark=(t,p,col,lab,dy)=>{
+    svg.appendChild(S("circle",{cx:X(t),cy:Y(p),r:4.5,fill:col,stroke:css("--panel"),"stroke-width":2}));
+    if(lab){const anchor=X(t)<70?"start":(X(t)>W-70?"end":"middle");
+      const tx=S("text",{x:X(t),y:Y(p)+dy,"font-size":10.5,fill:col,"text-anchor":anchor,"font-weight":"700"});
+      tx.textContent=lab;svg.appendChild(tx);}};
+  mark(day.lod_min, c[day.lod_min], css("--neg"), "low "+clk(day.lod_min), 18);
+  mark(CHECK_T, c[CHECK_T], css("--pos"), "BUY", -10);
+  mark(exitT, kind==="win"?c[exitT]:c[exitT], kind==="win"?css("--hitext"):css("--neg"),
+       kind==="win"?"flat 15:57":"stop "+clk(exitT), -10);
+  const cross=S("line",{y1:pT,y2:H-pB,stroke:css("--faint"),"stroke-width":1,opacity:0});
+  svg.appendChild(cross);
+  svg.addEventListener("mousemove",e=>{
+    const r=svg.getBoundingClientRect();
+    const t=Math.max(0,Math.min(389,Math.round((e.clientX-r.left)/r.width*W/(W-pL-pR)*389)));
+    cross.setAttribute("x1",X(t));cross.setAttribute("x2",X(t));cross.setAttribute("opacity",.7);
+    tip.innerHTML=`<div class="h">${day.date} ${clk(t)}</div>px ${c[t].toFixed(2)} · vwap ${v[t].toFixed(2)}`;
+    tip.style.opacity=1;
+    let x=e.clientX+14; if(x+tip.offsetWidth>innerWidth-8)x=e.clientX-tip.offsetWidth-14;
+    tip.style.left=x+"px"; tip.style.top=(e.clientY+14)+"px";});
+  svg.addEventListener("mouseleave",()=>{cross.setAttribute("opacity",0);tip.style.opacity=0;});
+  el.appendChild(svg);
+}
+
+function dist(){
+  const el=document.getElementById("dist"); el.innerHTML="";
+  const W=500,H=200,pL=36,pR=8,pT=12,pB=30;
+  const d=DAYS.dist, top=Math.max(...d.map(r=>r.pct))*1.12;
+  const Y=v=>H-pB-v/top*(H-pT-pB);
+  const slot=(W-pL-pR)/d.length, bw=slot-5;
+  const svg=S("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Trade return distribution"});
+  [10,20].forEach(v=>{svg.appendChild(S("line",{x1:pL,y1:Y(v),x2:W-pR,y2:Y(v),stroke:css("--line")}));
+    const t=S("text",{x:pL-5,y:Y(v)+4,"font-size":10,fill:css("--faint"),"text-anchor":"end"});t.textContent=v+"%";svg.appendChild(t);});
+  d.forEach((r,i)=>{
+    const x=pL+i*slot+2.5, col=r.hi<=0?css("--neg"):css("--pos");
+    const rect=S("rect",{x,y:Y(r.pct),width:bw,height:Math.max(1.5,H-pB-Y(r.pct)),fill:col,rx:2,opacity:r.hi<=0?.75:1});
+    rect.addEventListener("mousemove",e=>{tip.innerHTML=`<div class="h">${r.lo} … ${r.hi} bps</div><b>${r.pct}%</b> of trades`;
+      tip.style.opacity=1;let xx=e.clientX+14;if(xx+tip.offsetWidth>innerWidth-8)xx=e.clientX-tip.offsetWidth-14;
+      tip.style.left=xx+"px";tip.style.top=(e.clientY+14)+"px";});
+    rect.addEventListener("mouseleave",()=>tip.style.opacity=0);
+    svg.appendChild(rect);
+    if(i%3===1){const t=S("text",{x:x+bw/2,y:H-8,"font-size":9.5,fill:css("--faint"),"text-anchor":"middle"});
+      t.textContent=r.hi;svg.appendChild(t);}});
+  const cap=S("text",{x:W-pR,y:pT+6,"font-size":10.5,fill:css("--dim"),"text-anchor":"end"});
+  cap.textContent="many small VWAP stops → a fat right tail";svg.appendChild(cap);
+  const xl=S("text",{x:(pL+W-pR)/2,y:H-0.5,"font-size":9.5,fill:css("--faint"),"text-anchor":"middle"});
+  xl.textContent="net bps per trade";svg.appendChild(xl);
+  el.appendChild(svg);
+}
+
+function ladder(){
+  const el=document.getElementById("ladder"); el.innerHTML="";
+  const W=500,H=200,pL=36,pR=8,pT=12,pB=30;
+  const d=DAYS.ladder, top=Math.max(...d.map(r=>r.mean))*1.25;
+  const Y=v=>H-pB-v/top*(H-pT-pB);
+  const slot=(W-pL-pR)/d.length, bw=Math.min(52,slot-16);
+  const svg=S("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Mean bps by check time"});
+  [2,4].forEach(v=>{svg.appendChild(S("line",{x1:pL,y1:Y(v),x2:W-pR,y2:Y(v),stroke:css("--line")}));
+    const t=S("text",{x:pL-5,y:Y(v)+4,"font-size":10,fill:css("--faint"),"text-anchor":"end"});t.textContent="+"+v;svg.appendChild(t);});
+  d.forEach((r,i)=>{
+    const x=pL+i*slot+(slot-bw)/2, sweet=r.t==="11:00";
+    const rect=S("rect",{x,y:Y(r.mean),width:bw,height:H-pB-Y(r.mean),fill:sweet?css("--hi"):css("--neu"),rx:3,opacity:sweet?1:.8});
+    rect.addEventListener("mousemove",e=>{tip.innerHTML=`<div class="h">check @${r.t} · ~${r.n_yr}/yr</div><b>+${r.mean} bps</b> avg, 2018–2026`;
+      tip.style.opacity=1;let xx=e.clientX+14;if(xx+tip.offsetWidth>innerWidth-8)xx=e.clientX-tip.offsetWidth-14;
+      tip.style.left=xx+"px";tip.style.top=(e.clientY+14)+"px";});
+    rect.addEventListener("mouseleave",()=>tip.style.opacity=0);
+    svg.appendChild(rect);
+    const v=S("text",{x:x+bw/2,y:Y(r.mean)-6,"font-size":10.5,fill:sweet?css("--hitext"):css("--dim"),"text-anchor":"middle","font-weight":sweet?"700":"400"});
+    v.textContent="+"+r.mean;svg.appendChild(v);
+    const t=S("text",{x:x+bw/2,y:H-8,"font-size":10.5,fill:sweet?css("--hitext"):css("--faint"),"text-anchor":"middle"});
+    t.textContent=r.t;svg.appendChild(t);});
+  const cap=S("text",{x:W-pR,y:pT+6,"font-size":10.5,fill:css("--dim"),"text-anchor":"end"});
+  cap.textContent="positive at every check time — the condition is the edge";svg.appendChild(cap);
+  el.appendChild(svg);
+}
+
+function renderAll(){ribbon();exChart("ex_win",DAYS.win,"win");exChart("ex_stop",DAYS.stop,"stop");dist();ladder();}
+renderAll();
+new MutationObserver(renderAll).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+</script>
+</body></html>
