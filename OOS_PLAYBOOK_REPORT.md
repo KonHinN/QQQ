@@ -70,6 +70,22 @@ VAL scoring, then re-confirmed on 2025-26 which it had never seen. But +2–7 bp
 a 35% win rate is thin: the assumed 1-tick/side cost is optimistic for afternoon VWAP-stop fills,
 and ~87 trades/yr × ~+4 bps ≈ +3.5%/yr unlevered. Real but modest.
 
+## Addendum (2026-07-06): OR30 day-type filter battery — REFUTED
+
+Per the user's request, 8 pre-registered day-type filters were tested on the frozen OR30 spec,
+QQQ only (`or30_filters.py`; DEV 2018–21 → VAL 2022–24, single look):
+gap-aligned-with-break / gap-opposed / no-big-gap / **day-after-gap-day** / **uptrend (SMA20)** /
+downtrend / trend-aligned-sides / narrow-vs-wide OR.
+
+- On DEV, only **gap_align** improved the system (mean −1.8 → +1.8 bps, 3/4 positive years), with
+  a clean mechanical split (gap_opposed = −6.2). after_gap_day (−5.4) and uptrend (−1.3) were
+  dead on arrival.
+- On VAL, gap_align **failed**: mean −4.6 bps (worse than the unfiltered −1.2), 1/3 positive
+  years. On the 2025-26 in-sample year it merely halves the in-sample profit (+11.0% → +5.5%).
+
+Conclusion: the OR30 edge does not exist out-of-sample in any tested day-type regime. This closes
+HANDOFF §6.3 (system hardening) with a refutation. Tables: `ORF_dev.csv`, `ORF_val.csv`.
+
 ## Recommendations
 
 1. **Retire OR30** as a live system. Do not spend more OOS data trying to rescue it.
