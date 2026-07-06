@@ -1,0 +1,11 @@
+# OOS verdicts — QQQ_2020
+
+Days: 245 | clean 245 | events 36 | base runner rate 21.9%
+
+- **C1_gap_ladder** -- **CONFIRMED** | Q1 37.2% / base 21.9% / Q5 18.6% (n=43/43)
+- **C2_up3_contraction** -- **CONFIRMED** | up3 6.7% vs base 21.9% (n=45)
+- **C3_thrust_pause** -- **REFUTED** | trend-up 12.5% vs base 19.1% (n=8)
+- **C4_playbook_all** -- **WEAKENED** | med +2.8 bps, hit 53%, H1/H2 +22.2/-80.6 (n=36)
+- **C5_pm_check** -- **WEAKENED** | bounced +3.8 (n=25) vs not -35.3 (n=11)
+
+_Frozen spec (no re-tuning). Methodology per HANDOFF §6. Verdict thresholds pre-set in oos_validate.py._
