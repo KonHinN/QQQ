@@ -1,0 +1,199 @@
+<!doctype html><html><head><meta charset="utf-8"></head><body>
+<title>Premarket Zone — Three Hypotheses Tested</title>
+<style>
+:root{
+  --bg:#0b0e11; --panel:#12161c; --line:#1e2630; --ink:#c9d1d9; --dim:#7d8895; --faint:#5c6773;
+  --pos:#26a69a; --neg:#ef5350; --hi:#cb791d; --hitext:#ffb74d; --neu:#7d8895;
+  --pos-soft:rgba(38,166,154,.13); --neg-soft:rgba(239,83,80,.10); --hi-soft:rgba(203,121,29,.14);
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f2f4f5; --panel:#fbfcfd; --line:#dde3e8; --ink:#1c2530; --dim:#5f6b76; --faint:#8a949d;
+    --pos:#0d8f7c; --neg:#c9403d; --hi:#a8690f; --hitext:#a8690f; --neu:#66717c;
+    --pos-soft:rgba(13,143,124,.10); --neg-soft:rgba(201,64,61,.08); --hi-soft:rgba(168,105,15,.12); }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0e11; --panel:#12161c; --line:#1e2630; --ink:#c9d1d9; --dim:#7d8895; --faint:#5c6773;
+  --pos:#26a69a; --neg:#ef5350; --hi:#cb791d; --hitext:#ffb74d; --neu:#7d8895;
+  --pos-soft:rgba(38,166,154,.13); --neg-soft:rgba(239,83,80,.10); --hi-soft:rgba(203,121,29,.14);
+}
+:root[data-theme="light"]{
+  --bg:#f2f4f5; --panel:#fbfcfd; --line:#dde3e8; --ink:#1c2530; --dim:#5f6b76; --faint:#8a949d;
+  --pos:#0d8f7c; --neg:#c9403d; --hi:#a8690f; --hitext:#a8690f; --neu:#66717c;
+  --pos-soft:rgba(13,143,124,.10); --neg-soft:rgba(201,64,61,.08); --hi-soft:rgba(168,105,15,.12); }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:ui-monospace,"SF Mono","Cascadia Code",Consolas,Menlo,monospace;
+  font-variant-numeric:tabular-nums;line-height:1.45;padding:30px 4vw 54px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.kicker{color:var(--hitext);letter-spacing:3px;font-size:11px;text-transform:uppercase}
+h1{font-size:clamp(22px,3.2vw,31px);margin:2px 0 0;letter-spacing:-.5px;text-wrap:balance}
+.sub{color:var(--dim);font-size:12.5px;margin-top:3px}
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;border-top:3px solid var(--edge)}
+.chip .lab{font-size:11px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;min-height:28px}
+.chip .verdict{font-size:19px;font-weight:700;margin:6px 0 4px;color:var(--edge)}
+.chip .num{font-size:12.5px;color:var(--dim)} .chip .num b{color:var(--ink)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px 12px}
+.panel h2{font-size:15px;margin:0;font-weight:700}
+.take{color:var(--dim);font-size:12.5px;margin:4px 0 10px} .take b{color:var(--ink)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:11.5px;color:var(--dim);margin:0 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:16px;height:4px;border-radius:2px;display:inline-block}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+svg{width:100%;height:auto;display:block} svg text{font-family:inherit}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:860px){.duo{grid-template-columns:1fr}}
+.honesty{border:1px solid var(--line);border-left:3px solid var(--hi);border-radius:10px;
+  padding:10px 16px;color:var(--dim);font-size:12px;background:var(--hi-soft)}
+#tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);
+  border-radius:8px;padding:7px 11px;font-size:12px;color:var(--ink);opacity:0;z-index:9;
+  box-shadow:0 4px 18px rgba(0,0,0,.35)}
+#tip .h{color:var(--dim);font-size:10.5px}
+@media (prefers-reduced-motion:no-preference){ #tip{transition:opacity .1s} }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">Premarket zone study · QQQ · 2,096 days · Jan 2018 → Jul 2026</div>
+    <h1>Three premarket hypotheses meet the control test</h1>
+    <div class="sub">PM zone = 04:00–09:29 high/low · morning = 09:30–10:30 · every claim vs a matched null</div>
+  </header>
+
+  <div class="board">
+    <div class="chip" style="--edge:var(--hi)">
+      <div class="lab">H1 · morning always tests the PM zone</div>
+      <div class="verdict">TRUE — BUT NOT SPECIAL</div>
+      <div class="num">touched <b>85.5%</b> of mornings… exactly as often as <b>any level equally close</b> to the open</div>
+    </div>
+    <div class="chip" style="--edge:var(--neg)">
+      <div class="lab">H2 · gap + PM extension → fade the morning</div>
+      <div class="verdict">REFUTED</div>
+      <div class="num">every cell ≈ the all-days <b>+3 bps</b>; hypothesis direction holds in <b>3–5 of 9</b> years (coin flip)</div>
+    </div>
+    <div class="chip" style="--edge:var(--hi)">
+      <div class="lab">H3 · tight PM zone → false breakout</div>
+      <div class="verdict">HALF RIGHT</div>
+      <div class="num">tight zones break <b>more often</b> (95% vs 67%) — but false-break rate is <b>~85% for every width</b></div>
+    </div>
+  </div>
+
+  <section class="panel">
+    <div class="kicker">01 · H1 — the control that decides it</div>
+    <h2>PM edges sit exactly on the "any level" curve</h2>
+    <div class="take">Line = probability the first hour reaches <b>any</b> price level at distance d from the open (the null).
+      Dots = actual touch rate of the <b>PM edge</b>, binned by its distance. If the zone had magnet or barrier power, the dots would sit off the line. They don't — distance explains everything.</div>
+    <div class="legend"><span><span class="sw" style="background:var(--neu)"></span>any-level curve (null)</span>
+      <span><span class="dot" style="background:var(--pos)"></span>actual PM-edge touch rate</span></div>
+    <div class="duo"><div id="c_up"></div><div id="c_dn"></div></div>
+  </section>
+
+  <section class="panel">
+    <div class="kicker">02 · H2 — gap × premarket extension vs the morning</div>
+    <h2>The morning doesn't care how stretched the overnight move is</h2>
+    <div class="take">Median 09:30→10:29 return per condition cell. The two hypothesis cells (fade / rebound) are indistinguishable from ordinary days.</div>
+    <div id="c_h2"></div>
+  </section>
+
+  <section class="panel">
+    <div class="kicker">03 · H3 — zone width vs breakout quality</div>
+    <h2>Tight zones break constantly — and just as falsely as wide ones</h2>
+    <div class="take">Left bar = % of mornings that close beyond a PM edge. Right bar = % of those breaks back inside the zone within the hour. The <b>~85% failure rate is a constant of the market</b>, not a property of tight zones.</div>
+    <div class="legend"><span><span class="sw" style="background:var(--pos)"></span>breaks an edge</span>
+      <span><span class="sw" style="background:var(--neg)"></span>break fails (back inside by 11:30)</span></div>
+    <div id="c_h3"></div>
+  </section>
+
+  <div class="honesty">⚠ The keeper: <b>≈85% of first-hour PM-edge breakouts fail regardless of zone width</b> — same family as the OR30 finding
+    (91% of opening-range breaks return by 11:00). Never chase a morning breakout of a nearby level on QQQ; and the inverse (fading it)
+    is the family that already failed OOS after costs. The only validated morning information remains whether the early low holds — not where the PM levels sit.</div>
+</div>
+<div id="tip"></div>
+
+<script>
+const D = {"grid": [0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18, 0.2, 0.22, 0.24, 0.26, 0.28, 0.3, 0.32, 0.34, 0.36, 0.38, 0.4, 0.42, 0.44, 0.46, 0.48, 0.5, 0.52, 0.54, 0.56, 0.58, 0.6, 0.62, 0.64, 0.66, 0.68, 0.7, 0.72, 0.74, 0.76, 0.78, 0.8, 0.82, 0.84, 0.86, 0.88, 0.9, 0.92, 0.94, 0.96, 0.98, 1.0], "curve_up": [95.9, 93.0, 89.6, 86.8, 83.5, 80.2, 76.9, 73.9, 71.1, 67.5, 64.8, 61.5, 59.0, 56.0, 54.0, 51.6, 49.7, 46.5, 44.6, 42.8, 40.8, 38.8, 36.4, 34.6, 32.8, 30.8, 29.4, 28.1, 26.4, 25.1, 23.7, 22.4, 21.1, 20.2, 19.3, 18.2, 17.1, 16.0, 15.2, 14.4, 13.6, 13.0, 12.0, 11.4, 10.7, 10.3, 9.8, 9.3, 8.9, 8.1], "curve_dn": [95.0, 91.9, 88.7, 84.8, 81.6, 79.4, 76.2, 73.2, 69.7, 67.2, 64.5, 62.0, 59.3, 56.5, 54.2, 52.1, 49.9, 47.6, 45.6, 43.8, 41.1, 39.5, 38.3, 36.3, 34.4, 32.8, 31.5, 30.0, 28.5, 27.0, 25.8, 24.4, 23.4, 22.2, 21.4, 20.8, 19.7, 18.8, 17.8, 17.1, 16.2, 15.5, 14.5, 13.7, 12.8, 12.2, 11.6, 11.3, 10.9, 10.3], "pts_up": [{"x": 0.034, "y": 93.8, "n": 208}, {"x": 0.088, "y": 79.2, "n": 207}, {"x": 0.141, "y": 73.6, "n": 208}, {"x": 0.204, "y": 58.0, "n": 207}, {"x": 0.261, "y": 53.4, "n": 208}, {"x": 0.349, "y": 44.4, "n": 207}, {"x": 0.44, "y": 42.5, "n": 207}, {"x": 0.59, "y": 32.2, "n": 208}, {"x": 0.852, "y": 15.9, "n": 207}, {"x": 1.457, "y": 8.2, "n": 208}], "pts_dn": [{"x": 0.058, "y": 87.0, "n": 208}, {"x": 0.124, "y": 83.2, "n": 208}, {"x": 0.185, "y": 63.9, "n": 208}, {"x": 0.251, "y": 52.4, "n": 208}, {"x": 0.336, "y": 51.9, "n": 208}, {"x": 0.422, "y": 38.2, "n": 207}, {"x": 0.519, "y": 28.4, "n": 208}, {"x": 0.658, "y": 24.0, "n": 208}, {"x": 0.888, "y": 19.2, "n": 208}, {"x": 1.415, "y": 7.2, "n": 208}], "h2": [{"cell": "gap\u2191 + PM ext\u2191", "hyp": "pullback?", "n": 594, "med": 2.9, "yrs": "3/9"}, {"cell": "gap\u2191 + PM ext\u2193", "hyp": "", "n": 64, "med": 8.9, "yrs": "3/5"}, {"cell": "gap\u2193 + PM ext\u2193", "hyp": "rebound?", "n": 422, "med": 4.8, "yrs": "5/9"}, {"cell": "gap\u2193 + PM ext\u2191", "hyp": "", "n": 46, "med": -9.1, "yrs": "0/1"}, {"cell": "ALL DAYS", "hyp": "base", "n": 2096, "med": 3.0, "yrs": ""}], "h3": [{"zone": "tight (Q1)", "brk": 95.3, "false": 84.5, "n": 466}, {"zone": "mid", "brk": 81.1, "false": 84.9, "n": 1165}, {"zone": "wide (Q5)", "brk": 67.3, "false": 85.2, "n": 452}]};
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const S=(t,a)=>{const e=document.createElementNS("http://www.w3.org/2000/svg",t);for(const k in a)e.setAttribute(k,a[k]);return e};
+const tip=document.getElementById("tip");
+function tipOn(el,html){el.addEventListener("mousemove",e=>{tip.innerHTML=html;tip.style.opacity=1;
+  let x=e.clientX+14;if(x+tip.offsetWidth>innerWidth-8)x=e.clientX-tip.offsetWidth-14;
+  tip.style.left=x+"px";tip.style.top=(e.clientY+14)+"px";});
+  el.addEventListener("mouseleave",()=>tip.style.opacity=0);}
+
+function curveChart(id, curve, pts, title){
+  const el=document.getElementById(id); el.innerHTML="";
+  const W=520,H=270,pL=42,pR=12,pT=26,pB=30, xmax=1.0;
+  const X=d=>pL+Math.min(d,xmax)/xmax*(W-pL-pR), Y=v=>H-pB-(v/100)*(H-pT-pB);
+  const svg=S("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":title});
+  const tt=S("text",{x:pL,y:13,"font-size":11.5,fill:css("--dim"),"font-weight":"700"});tt.textContent=title;svg.appendChild(tt);
+  [0,25,50,75,100].forEach(v=>{svg.appendChild(S("line",{x1:pL,y1:Y(v),x2:W-pR,y2:Y(v),stroke:css("--line")}));
+    const t=S("text",{x:pL-6,y:Y(v)+4,"font-size":10,fill:css("--faint"),"text-anchor":"end"});t.textContent=v+"%";svg.appendChild(t);});
+  [0.25,0.5,0.75,1.0].forEach(d=>{const t=S("text",{x:X(d),y:H-8,"font-size":10,fill:css("--faint"),"text-anchor":"middle"});
+    t.textContent=d.toFixed(2)+"%";svg.appendChild(t);});
+  const ptsStr=D.grid.map((g,i)=>`${X(g).toFixed(1)},${Y(curve[i]).toFixed(1)}`).join(" ");
+  svg.appendChild(S("polyline",{points:ptsStr,fill:"none",stroke:css("--neu"),"stroke-width":2,opacity:.9}));
+  for(const p of pts){
+    if(p.x>xmax)continue;
+    const c=S("circle",{cx:X(p.x),cy:Y(p.y),r:5,fill:css("--pos"),stroke:css("--panel"),"stroke-width":2});
+    tipOn(c,`<div class="h">PM edge at ${p.x.toFixed(2)}% from open · n=${p.n}</div>touched <b>${p.y}%</b> of mornings`);
+    svg.appendChild(c);}
+  const xl=S("text",{x:(pL+W-pR)/2,y:H-0.5,"font-size":9.5,fill:css("--faint"),"text-anchor":"middle"});
+  xl.textContent="distance from the open";svg.appendChild(xl);
+  el.appendChild(svg);
+}
+
+function h2Chart(){
+  const el=document.getElementById("c_h2"); el.innerHTML="";
+  const W=1040,H=240,pL=50,pR=14,pT=16,pB=46, lim=12;
+  const Y=v=>H-pB-(v+lim)/(2*lim)*(H-pT-pB);
+  const svg=S("svg",{viewBox:`0 0 ${W} ${H}`});
+  [[-10,"−10"],[0,"0"],[10,"+10"]].forEach(([v,l])=>{
+    svg.appendChild(S("line",{x1:pL,y1:Y(v),x2:W-pR,y2:Y(v),stroke:css("--line"),"stroke-width":v===0?1.4:1}));
+    const t=S("text",{x:pL-8,y:Y(v)+4,"font-size":10.5,fill:css("--faint"),"text-anchor":"end"});t.textContent=l+" bps";svg.appendChild(t);});
+  // all-days base band
+  svg.appendChild(S("line",{x1:pL,y1:Y(3),x2:W-pR,y2:Y(3),stroke:css("--hitext"),"stroke-dasharray":"4,4",opacity:.7}));
+  const bl=S("text",{x:W-pR-4,y:Y(3)-5,"font-size":10,fill:css("--hitext"),"text-anchor":"end"});bl.textContent="all days +3.0";svg.appendChild(bl);
+  const cells=D.h2.filter(r=>r.cell!=="ALL DAYS");
+  const slot=(W-pL-pR)/cells.length, bw=Math.min(64,slot-40);
+  cells.forEach((r,i)=>{
+    const x=pL+i*slot+(slot-bw)/2;
+    const col=r.hyp? css("--hi") : css("--neu");
+    const rect=S("rect",{x,y:Math.min(Y(0),Y(r.med)),width:bw,height:Math.max(2,Math.abs(Y(r.med)-Y(0))),fill:col,rx:3});
+    tipOn(rect,`<div class="h">${r.cell} · n=${r.n}</div>median morning <b>${r.med>0?"+":""}${r.med} bps</b><br><span class="h">hypothesis direction in ${r.yrs||"—"} years</span>`);
+    svg.appendChild(rect);
+    const t=S("text",{x:x+bw/2,y:H-26,"font-size":11,fill:css("--dim"),"text-anchor":"middle"});t.textContent=r.cell;svg.appendChild(t);
+    if(r.hyp){const h=S("text",{x:x+bw/2,y:H-11,"font-size":10,fill:css("--hitext"),"text-anchor":"middle"});h.textContent=r.hyp+" — no";svg.appendChild(h);}
+    const v=S("text",{x:x+bw/2,y:Y(r.med)+(r.med>=0?-6:14),"font-size":10.5,fill:css("--ink"),"text-anchor":"middle","font-weight":"700"});
+    v.textContent=(r.med>0?"+":"")+r.med;svg.appendChild(v);});
+  el.appendChild(svg);
+}
+
+function h3Chart(){
+  const el=document.getElementById("c_h3"); el.innerHTML="";
+  const W=1040,H=240,pL=50,pR=14,pT=16,pB=30;
+  const Y=v=>H-pB-(v/100)*(H-pT-pB);
+  const svg=S("svg",{viewBox:`0 0 ${W} ${H}`});
+  [25,50,75,100].forEach(v=>{svg.appendChild(S("line",{x1:pL,y1:Y(v),x2:W-pR,y2:Y(v),stroke:css("--line")}));
+    const t=S("text",{x:pL-8,y:Y(v)+4,"font-size":10.5,fill:css("--faint"),"text-anchor":"end"});t.textContent=v+"%";svg.appendChild(t);});
+  const slot=(W-pL-pR)/D.h3.length, bw=44;
+  D.h3.forEach((r,i)=>{
+    const x0=pL+i*slot+(slot-2*bw-6)/2;
+    [[r.brk,css("--pos"),"breaks an edge",x0],[r.false,css("--neg"),"break fails",x0+bw+6]].forEach(([v,col,nm,x])=>{
+      const rect=S("rect",{x,y:Y(v),width:bw,height:H-pB-Y(v),fill:col,rx:3,opacity:.92});
+      tipOn(rect,`<div class="h">${r.zone} PM zone · n=${r.n}</div>${nm}: <b>${v}%</b>`);
+      svg.appendChild(rect);
+      const t=S("text",{x:x+bw/2,y:Y(v)-6,"font-size":10.5,fill:col,"text-anchor":"middle","font-weight":"700"});
+      t.textContent=v+"%";svg.appendChild(t);});
+    const lab=S("text",{x:x0+bw+3,y:H-10,"font-size":11.5,fill:css("--dim"),"text-anchor":"middle"});
+    lab.textContent=r.zone;svg.appendChild(lab);});
+  el.appendChild(svg);
+}
+
+function renderAll(){
+  curveChart("c_up", D.curve_up, D.pts_up, "upside: P(reach level d above open) vs PM-HIGH touches");
+  curveChart("c_dn", D.curve_dn, D.pts_dn, "downside: P(reach level d below open) vs PM-LOW touches");
+  h2Chart(); h3Chart();
+}
+renderAll();
+new MutationObserver(renderAll).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+</script>
+</body></html>
