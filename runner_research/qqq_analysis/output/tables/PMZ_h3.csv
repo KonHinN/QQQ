@@ -1,0 +1,4 @@
+pm_zone,n,break_rate_pct,false_break_pct,yrs_more_false_than_avg
+tight(Q1),466,95.3,84.5,4/9
+mid,1165,81.1,84.9,5/9
+wide(Q5),452,67.3,85.2,5/9
