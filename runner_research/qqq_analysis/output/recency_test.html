@@ -1,0 +1,195 @@
+<!doctype html><html><head><meta charset="utf-8"></head><body>
+<title>Recent vs Older — Is the Edge Time-Varying?</title>
+<style>
+:root{
+  --bg:#0b0e11; --panel:#12161c; --line:#1e2630; --ink:#c9d1d9; --dim:#7d8895; --faint:#5c6773;
+  --pos:#26a69a; --neg:#ef5350; --hi:#cb791d; --hitext:#ffb74d; --neu:#7d8895;
+  --pos-soft:rgba(38,166,154,.13); --neg-soft:rgba(239,83,80,.10); --hi-soft:rgba(203,121,29,.14);
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f2f4f5; --panel:#fbfcfd; --line:#dde3e8; --ink:#1c2530; --dim:#5f6b76; --faint:#8a949d;
+    --pos:#0d8f7c; --neg:#c9403d; --hi:#a8690f; --hitext:#a8690f; --neu:#66717c;
+    --pos-soft:rgba(13,143,124,.10); --neg-soft:rgba(201,64,61,.08); --hi-soft:rgba(168,105,15,.12); }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0e11; --panel:#12161c; --line:#1e2630; --ink:#c9d1d9; --dim:#7d8895; --faint:#5c6773;
+  --pos:#26a69a; --neg:#ef5350; --hi:#cb791d; --hitext:#ffb74d; --neu:#7d8895;
+  --pos-soft:rgba(38,166,154,.13); --neg-soft:rgba(239,83,80,.10); --hi-soft:rgba(203,121,29,.14);
+}
+:root[data-theme="light"]{
+  --bg:#f2f4f5; --panel:#fbfcfd; --line:#dde3e8; --ink:#1c2530; --dim:#5f6b76; --faint:#8a949d;
+  --pos:#0d8f7c; --neg:#c9403d; --hi:#a8690f; --hitext:#a8690f; --neu:#66717c;
+  --pos-soft:rgba(13,143,124,.10); --neg-soft:rgba(201,64,61,.08); --hi-soft:rgba(168,105,15,.12); }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:ui-monospace,"SF Mono","Cascadia Code",Consolas,Menlo,monospace;
+  font-variant-numeric:tabular-nums;line-height:1.45;padding:30px 4vw 54px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.kicker{color:var(--hitext);letter-spacing:3px;font-size:11px;text-transform:uppercase}
+h1{font-size:clamp(22px,3.2vw,31px);margin:2px 0 0;letter-spacing:-.5px;text-wrap:balance}
+.sub{color:var(--dim);font-size:12.5px;margin-top:3px}
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;border-top:3px solid var(--edge)}
+.chip .lab{font-size:11px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;min-height:28px}
+.chip .verdict{font-size:18px;font-weight:700;margin:6px 0 4px;color:var(--edge)}
+.chip .num{font-size:12.5px;color:var(--dim)} .chip .num b{color:var(--ink)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px 12px}
+.panel h2{font-size:15px;margin:0;font-weight:700}
+.take{color:var(--dim);font-size:12.5px;margin:4px 0 10px} .take b{color:var(--ink)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:11.5px;color:var(--dim);margin:0 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:16px;height:4px;border-radius:2px;display:inline-block}
+svg{width:100%;height:auto;display:block} svg text{font-family:inherit}
+.duo{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+@media(max-width:860px){.duo{grid-template-columns:1fr}}
+.honesty{border:1px solid var(--line);border-left:3px solid var(--pos);border-radius:10px;
+  padding:10px 16px;color:var(--dim);font-size:12px;background:var(--pos-soft)}
+.honesty b{color:var(--ink)}
+#tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);
+  border-radius:8px;padding:7px 11px;font-size:12px;color:var(--ink);opacity:0;z-index:9;
+  box-shadow:0 4px 18px rgba(0,0,0,.35)}
+#tip .h{color:var(--dim);font-size:10.5px}
+@media (prefers-reduced-motion:no-preference){ #tip{transition:opacity .1s} }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">Hypothesis test · early-low-hold playbook · QQQ · 431 trades · 2018–2026</div>
+    <h1>"Recent chart patterns are more tradable" — tested, three ways</h1>
+    <div class="sub">does the edge grow over time · is the recent half better · does trading it only-when-hot help</div>
+  </header>
+
+  <div class="board">
+    <div class="chip" style="--edge:var(--neu)">
+      <div class="lab">Does the edge grow over time?</div>
+      <div class="verdict">NO — FLAT</div>
+      <div class="num">trend slope <b>+0.3 bps/yr</b> (p=0.74); rank-corr with time <b>0.03</b>. Stationary.</div>
+    </div>
+    <div class="chip" style="--edge:var(--neg)">
+      <div class="lab">Is the recent half more tradable?</div>
+      <div class="verdict">NO — SLIGHTLY LESS</div>
+      <div class="num">old half <b>+7.2 bps</b> / 36% · new half <b>+5.4 bps</b> / 32%. 2025 was the weakest year.</div>
+    </div>
+    <div class="chip" style="--edge:var(--neg)">
+      <div class="lab">Trade it only when it's recently hot?</div>
+      <div class="verdict">BACKFIRES</div>
+      <div class="num">the trades that rule <b>skips</b> average <b>+13 bps</b> — the edge mean-reverts, not trends.</div>
+    </div>
+  </div>
+
+  <section class="panel">
+    <div class="kicker">01 · rolling edge — is there a trend?</div>
+    <h2>The edge is a flat line with weather, not a slope</h2>
+    <div class="take">120-trade rolling mean net bps. It wanders with volatility but has no upward drift — recent stretches are not systematically better than old ones. Grey band = the two hypothesis "halves" of the sample.</div>
+    <div class="legend"><span><span class="sw" style="background:var(--pos)"></span>rolling 120-trade edge</span>
+      <span><span class="sw" style="background:var(--faint);height:2px"></span>0 line</span></div>
+    <div id="roll"></div>
+  </section>
+
+  <div class="duo">
+    <section class="panel">
+      <div class="kicker">02 · per-year edge</div>
+      <h2>No newer-is-better pattern</h2>
+      <div class="take">Mean net bps per trade, by year (2026 partial). The best and worst years are scattered across the decade.</div>
+      <div id="yearly"></div>
+    </section>
+    <section class="panel">
+      <div class="kicker">03 · the recency-gate backfire</div>
+      <h2>What "only trade when hot" would skip</h2>
+      <div class="take">Rule: skip the trade if the pattern's trailing edge was ≤0. The skipped trades (amber) were <b>more</b> profitable than the taken ones — exactly backwards.</div>
+      <div id="gate"></div>
+    </section>
+  </div>
+
+  <div class="honesty">✓ <b>Where your instinct is exactly right:</b> recent data as the <b>truth test</b>, not a timing switch. Every idea this
+    project killed — the OR30 system, the gap playbook, the PM-high breakout — died because it failed on the <b>recent</b> block after
+    fitting the older one. That IS "recent is more tradable," applied correctly: we only believe an edge that survives into the present.
+    We just don't turn a believed edge on and off by how it did last month — because for this playbook, that loses money.</div>
+</div>
+<div id="tip"></div>
+
+<script>
+const D = {"dates": ["2018-01-03", "2018-01-04", "2018-01-08", "2018-01-26", "2018-02-01", "2018-02-13", "2018-02-14", "2018-02-16", "2018-02-20", "2018-02-21", "2018-03-07", "2018-03-09", "2018-03-23", "2018-04-04", "2018-04-09", "2018-04-12", "2018-04-17", "2018-04-26", "2018-05-10", "2018-05-14", "2018-05-16", "2018-05-17", "2018-06-01", "2018-06-05", "2018-06-12", "2018-06-13", "2018-06-29", "2018-07-06", "2018-07-11", "2018-07-12", "2018-07-17", "2018-07-20", "2018-08-02", "2018-08-13", "2018-08-21", "2018-08-24", "2018-08-29", "2018-08-31", "2018-09-20", "2018-09-27", "2018-09-28", "2018-10-02", "2018-10-09", "2018-10-12", "2018-11-07", "2018-11-26", "2018-11-30", "2018-12-12", "2018-12-14", "2018-12-18", "2019-01-04", "2019-01-07", "2019-01-15", "2019-01-17", "2019-01-25", "2019-02-04", "2019-02-20", "2019-02-22", "2019-03-13", "2019-03-15", "2019-03-18", "2019-03-21", "2019-03-26", "2019-04-10", "2019-04-22", "2019-05-03", "2019-05-15", "2019-06-07", "2019-06-14", "2019-06-17", "2019-06-18", "2019-06-21", "2019-06-27", "2019-07-02", "2019-07-09", "2019-07-24", "2019-07-30", "2019-08-13", "2019-08-16", "2019-09-05", "2019-09-11", "2019-09-19", "2019-10-04", "2019-10-09", "2019-10-10", "2019-10-11", "2019-10-14", "2019-10-15", "2019-10-23", "2019-10-25", "2019-11-01", "2019-11-07", "2019-11-12", "2019-11-13", "2019-11-15", "2019-11-20", "2019-11-25", "2019-12-06", "2019-12-10", "2019-12-16", "2019-12-19", "2019-12-26", "2020-01-06", "2020-01-15", "2020-01-21", "2020-01-28", "2020-02-13", "2020-02-18", "2020-02-19", "2020-03-05", "2020-03-06", "2020-03-20", "2020-03-26", "2020-03-30", "2020-03-31", "2020-04-01", "2020-04-02", "2020-04-14", "2020-04-20", "2020-04-23", "2020-04-24", "2020-05-04", "2020-05-05", "2020-05-08", "2020-05-11", "2020-05-19", "2020-05-20", "2020-05-28", "2020-06-01", "2020-06-03", "2020-06-05", "2020-06-09", "2020-06-15", "2020-06-22", "2020-06-23", "2020-06-30", "2020-07-06", "2020-07-07", "2020-07-08", "2020-07-13", "2020-07-20", "2020-07-27", "2020-07-29", "2020-08-06", "2020-08-12", "2020-08-20", "2020-08-26", "2020-08-31", "2020-09-09", "2020-09-25", "2020-09-30", "2020-10-05", "2020-10-09", "2020-10-12", "2020-11-03", "2020-11-04", "2020-11-05", "2020-11-06", "2020-11-11", "2020-11-16", "2020-11-19", "2020-12-01", "2020-12-07", "2020-12-14", "2021-01-06", "2021-01-07", "2021-01-13", "2021-01-14", "2021-01-20", "2021-01-26", "2021-01-29", "2021-02-08", "2021-02-09", "2021-02-11", "2021-03-01", "2021-03-08", "2021-03-15", "2021-03-16", "2021-03-22", "2021-03-31", "2021-04-01", "2021-04-05", "2021-04-06", "2021-04-09", "2021-04-13", "2021-04-23", "2021-04-26", "2021-05-07", "2021-05-13", "2021-05-14", "2021-05-19", "2021-05-24", "2021-05-27", "2021-06-04", "2021-06-17", "2021-06-22", "2021-06-24", "2021-06-28", "2021-06-29", "2021-07-13", "2021-07-14", "2021-07-26", "2021-07-29", "2021-08-09", "2021-08-13", "2021-09-01", "2021-09-03", "2021-09-23", "2021-10-11", "2021-10-14", "2021-10-18", "2021-10-21", "2021-10-26", "2021-10-27", "2021-10-28", "2021-10-29", "2021-11-02", "2021-11-16", "2021-12-07", "2021-12-22", "2021-12-23", "2021-12-27", "2022-01-14", "2022-01-20", "2022-02-15", "2022-02-28", "2022-03-09", "2022-03-15", "2022-03-16", "2022-03-18", "2022-03-22", "2022-03-28", "2022-04-04", "2022-04-13", "2022-04-19", "2022-05-25", "2022-05-26", "2022-06-06", "2022-06-21", "2022-06-22", "2022-06-23", "2022-06-24", "2022-07-07", "2022-07-08", "2022-07-13", "2022-07-15", "2022-07-18", "2022-07-20", "2022-07-27", "2022-08-03", "2022-08-12", "2022-08-24", "2022-08-25", "2022-09-09", "2022-09-19", "2022-09-28", "2022-10-03", "2022-10-04", "2022-10-19", "2022-10-20", "2022-10-25", "2022-10-28", "2022-11-04", "2022-11-07", "2022-11-08", "2022-11-10", "2022-11-17", "2022-11-23", "2022-12-09", "2022-12-20", "2022-12-29", "2023-01-06", "2023-01-09", "2023-01-13", "2023-01-20", "2023-01-31", "2023-02-03", "2023-02-13", "2023-02-28", "2023-03-02", "2023-03-14", "2023-03-20", "2023-03-22", "2023-03-23", "2023-03-31", "2023-04-19", "2023-04-20", "2023-04-27", "2023-05-05", "2023-05-09", "2023-05-16", "2023-05-17", "2023-05-22", "2023-05-25", "2023-05-26", "2023-06-05", "2023-06-15", "2023-06-28", "2023-06-30", "2023-07-05", "2023-07-12", "2023-07-13", "2023-07-17", "2023-07-31", "2023-08-23", "2023-08-29", "2023-08-31", "2023-09-22", "2023-10-06", "2023-10-12", "2023-10-24", "2023-11-01", "2023-11-03", "2023-11-07", "2023-11-10", "2023-11-14", "2023-11-15", "2023-11-20", "2023-11-27", "2023-11-28", "2023-12-05", "2023-12-08", "2023-12-13", "2023-12-15", "2023-12-19", "2023-12-20", "2023-12-26", "2024-01-04", "2024-01-05", "2024-01-08", "2024-01-09", "2024-01-16", "2024-01-19", "2024-01-24", "2024-02-02", "2024-02-07", "2024-02-08", "2024-02-09", "2024-02-26", "2024-02-27", "2024-03-01", "2024-03-07", "2024-03-18", "2024-03-28", "2024-04-03", "2024-04-23", "2024-05-06", "2024-05-08", "2024-05-09", "2024-05-14", "2024-05-15", "2024-05-17", "2024-05-22", "2024-05-29", "2024-06-07", "2024-06-14", "2024-06-25", "2024-07-02", "2024-07-15", "2024-07-22", "2024-08-05", "2024-08-13", "2024-08-15", "2024-08-29", "2024-09-23", "2024-09-25", "2024-10-07", "2024-10-08", "2024-10-22", "2024-10-25", "2024-11-19", "2024-12-02", "2024-12-04", "2024-12-06", "2024-12-11", "2024-12-16", "2025-01-06", "2025-01-13", "2025-01-15", "2025-01-22", "2025-01-23", "2025-01-27", "2025-01-31", "2025-02-04", "2025-02-11", "2025-02-12", "2025-02-14", "2025-03-20", "2025-03-24", "2025-03-25", "2025-04-22", "2025-04-23", "2025-04-24", "2025-04-29", "2025-05-02", "2025-05-05", "2025-05-13", "2025-05-15", "2025-05-19", "2025-05-21", "2025-05-22", "2025-05-23", "2025-05-27", "2025-06-09", "2025-06-11", "2025-06-12", "2025-06-16", "2025-06-17", "2025-06-24", "2025-06-26", "2025-07-02", "2025-07-11", "2025-07-14", "2025-07-17", "2025-07-21", "2025-08-08", "2025-08-14", "2025-08-22", "2025-08-26", "2025-08-28", "2025-09-03", "2025-09-08", "2025-09-10", "2025-09-11", "2025-09-12", "2025-09-15", "2025-09-18", "2025-09-22", "2025-09-29", "2025-10-01", "2025-10-15", "2025-10-27", "2025-11-04", "2025-11-05", "2025-11-24", "2025-12-01", "2025-12-02", "2025-12-03", "2026-01-05", "2026-01-07", "2026-01-12", "2026-01-20", "2026-01-21", "2026-01-23", "2026-01-26", "2026-01-27", "2026-02-02", "2026-02-06", "2026-02-25", "2026-03-02", "2026-03-04", "2026-03-09", "2026-03-17", "2026-04-02", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-17", "2026-04-22", "2026-04-23", "2026-04-24", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-08", "2026-05-14", "2026-05-26", "2026-05-28", "2026-06-02", "2026-06-15", "2026-06-30"], "roll": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 13.43, 12.55, 12.03, 11.08, 10.65, 12.37, 11.6, 11.15, 10.73, 10.13, 9.56, 10.98, 11.67, 11.13, 11.98, 11.57, 11.87, 11.55, 10.9, 10.76, 10.75, 10.34, 11.34, 10.94, 10.55, 10.6, 10.92, 11.58, 11.04, 10.61, 10.14, 9.49, 9.07, 8.91, 8.61, 9.1, 9.65, 9.39, 8.8, 8.12, 7.8, 7.69, 7.52, 8.24, 7.98, 7.53, 7.31, 7.0, 6.9, 6.71, 7.0, 6.81, 6.62, 6.37, 6.11, 5.95, 5.67, 5.7, 5.76, 5.46, 5.31, 5.6, 5.83, 6.18, 5.93, 5.9, 6.13, 6.03, 5.9, 5.84, 5.53, 4.85, 4.05, 4.2, 5.37, 5.13, 4.65, 4.23, 3.93, 3.6, 3.32, 3.01, 2.96, 2.95, 2.49, 3.39, 3.43, 2.55, 2.51, 2.22, 2.28, 2.68, 2.14, 4.0, 2.59, 2.68, 2.61, 2.12, 2.18, 2.05, 1.9, 3.45, 3.61, 3.28, 4.36, 4.77, 5.43, 6.45, 5.63, 6.05, 6.8, 6.21, 6.28, 5.63, 6.39, 5.87, 5.54, 5.05, 5.95, 6.53, 6.28, 6.8, 7.08, 7.25, 7.29, 6.28, 6.74, 6.76, 6.73, 7.32, 7.29, 6.38, 5.88, 5.97, 5.48, 6.03, 5.35, 5.24, 5.24, 5.32, 5.1, 5.08, 4.97, 5.06, 5.12, 4.96, 5.08, 4.86, 4.91, 4.88, 5.56, 6.69, 6.88, 6.84, 7.15, 6.67, 6.75, 6.77, 7.12, 7.43, 7.5, 7.42, 7.43, 6.75, 6.84, 7.01, 7.05, 7.35, 7.16, 7.06, 7.01, 7.71, 7.59, 7.61, 7.82, 7.8, 8.71, 8.49, 8.74, 8.83, 8.68, 8.51, 8.49, 8.0, 7.82, 7.63, 6.97, 6.55, 6.5, 6.11, 7.41, 8.18, 8.59, 8.8, 8.54, 9.19, 9.2, 10.08, 10.11, 10.05, 9.69, 9.36, 9.27, 9.98, 9.69, 9.02, 9.18, 9.15, 8.79, 8.84, 9.71, 10.49, 10.41, 8.65, 7.52, 6.98, 8.52, 8.41, 8.34, 8.38, 8.09, 6.66, 7.52, 7.38, 6.24, 5.95, 6.58, 5.63, 5.52, 4.98, 3.57, 3.62, 4.67, 4.13, 3.26, 5.33, 6.12, 5.78, 4.92, 4.39, 4.6, 4.18, 3.75, 3.73, 3.36, 4.43, 4.39, 4.35, 5.37, 5.33, 5.43, 5.6, 5.49, 5.49, 5.78, 5.79, 6.05, 6.85, 6.76, 6.56, 6.53, 6.64, 6.05, 5.99, 6.0, 6.15, 6.32, 5.99, 5.94, 7.34, 6.82, 5.79, 5.58, 5.45, 4.98, 6.21, 5.56, 5.49, 5.84, 5.78, 5.84, 5.58, 5.3, 5.39, 5.31, 5.31, 5.28, 5.11, 5.2, 5.15, 5.67, 5.46, 5.54, 6.71, 6.43, 7.0, 6.22, 6.22, 6.07, 6.11, 6.23, 6.76, 6.85, 6.87, 7.19, 7.07, 7.51, 7.93, 7.79, 8.0, 6.81, 7.15, 7.37, 6.94, 5.87, 5.34, 5.68, 5.23, 5.32, 5.43, 5.77, 6.47, 7.32, 6.98, 7.08, 7.03, 7.0, 7.01, 7.23, 7.2, 6.29, 5.93, 6.04, 6.14, 6.38, 7.09, 6.08, 6.2, 6.42, 6.38, 6.98, 6.87, 6.02, 6.08, 5.97, 5.8, 4.26, 4.23, 4.41, 4.61, 4.53, 4.4, 3.4, 4.43, 4.31, 2.85, 2.41, 3.12, 3.4, 3.87, 4.02, 3.99, 4.14, 4.6, 4.93, 3.89, 3.51, 3.5, 2.55, 2.51, 2.97, 3.13, 3.29, 3.46, 3.37, 2.84, 2.93, 2.23, 2.17, 2.18, 2.2, 1.99, 1.99, 1.98, 2.15, 1.97, 1.37, 1.42, 1.91, 0.66, 1.1, 1.1, 1.62, 1.74, 2.13, 1.53, 1.56, 1.54, 1.04, 1.09, 1.05, 1.56, 1.74, 1.34, 1.1, 1.11, 1.07, 1.14, 2.25, 2.42, 1.51, 1.1, 2.72, 1.61, 2.13, 2.4, 3.07, 3.12, 2.82, 3.3, 3.21, 3.01, 2.66, 2.84, 3.36, 4.12, 4.05, 3.87, 4.38, 4.47, 4.7, 4.89], "cum": [23.0, 14.0, 14.0, 67.0, 40.0, 14.0, 118.0, 109.0, 123.0, 107.0, 73.0, 138.0, 97.0, 360.0, 375.0, 361.0, 398.0, 360.0, 362.0, 353.0, 343.0, 315.0, 331.0, 323.0, 312.0, 314.0, 298.0, 365.0, 341.0, 406.0, 477.0, 458.0, 578.0, 563.0, 552.0, 543.0, 577.0, 563.0, 558.0, 537.0, 515.0, 505.0, 476.0, 468.0, 557.0, 534.0, 524.0, 515.0, 496.0, 478.0, 560.0, 607.0, 590.0, 647.0, 636.0, 665.0, 658.0, 632.0, 635.0, 645.0, 631.0, 703.0, 689.0, 675.0, 689.0, 721.0, 776.0, 751.0, 732.0, 710.0, 674.0, 653.0, 650.0, 637.0, 682.0, 734.0, 723.0, 687.0, 641.0, 624.0, 623.0, 617.0, 684.0, 671.0, 640.0, 629.0, 609.0, 607.0, 598.0, 630.0, 620.0, 609.0, 592.0, 574.0, 566.0, 545.0, 553.0, 565.0, 540.0, 531.0, 566.0, 594.0, 636.0, 617.0, 619.0, 650.0, 645.0, 637.0, 637.0, 608.0, 539.0, 454.0, 475.0, 612.0, 590.0, 540.0, 494.0, 463.0, 428.0, 399.0, 385.0, 369.0, 368.0, 365.0, 447.0, 426.0, 424.0, 410.0, 389.0, 380.0, 394.0, 394.0, 576.0, 670.0, 697.0, 674.0, 652.0, 622.0, 609.0, 581.0, 758.0, 748.0, 725.0, 846.0, 884.0, 965.0, 1073.0, 1040.0, 1067.0, 1222.0, 1222.0, 1212.0, 1253.0, 1330.0, 1257.0, 1207.0, 1184.0, 1277.0, 1341.0, 1290.0, 1331.0, 1354.0, 1346.0, 1343.0, 1311.0, 1342.0, 1336.0, 1323.0, 1374.0, 1353.0, 1326.0, 1313.0, 1307.0, 1304.0, 1360.0, 1307.0, 1287.0, 1261.0, 1273.0, 1257.0, 1240.0, 1299.0, 1297.0, 1290.0, 1284.0, 1330.0, 1358.0, 1339.0, 1318.0, 1377.0, 1476.0, 1478.0, 1471.0, 1495.0, 1483.0, 1543.0, 1536.0, 1541.0, 1533.0, 1524.0, 1514.0, 1509.0, 1494.0, 1491.0, 1482.0, 1474.0, 1491.0, 1467.0, 1445.0, 1472.0, 1545.0, 1520.0, 1506.0, 1513.0, 1502.0, 1589.0, 1572.0, 1614.0, 1599.0, 1573.0, 1588.0, 1613.0, 1597.0, 1555.0, 1535.0, 1486.0, 1431.0, 1417.0, 1370.0, 1497.0, 1520.0, 1485.0, 1532.0, 1637.0, 1693.0, 1644.0, 1703.0, 1676.0, 1634.0, 1562.0, 1508.0, 1482.0, 1566.0, 1529.0, 1529.0, 1528.0, 1522.0, 1465.0, 1450.0, 1546.0, 1653.0, 1644.0, 1614.0, 1572.0, 1535.0, 1696.0, 1662.0, 1622.0, 1614.0, 1552.0, 1557.0, 1650.0, 1610.0, 1595.0, 1598.0, 1755.0, 1749.0, 1703.0, 1664.0, 1650.0, 1657.0, 1772.0, 1748.0, 1721.0, 1896.0, 1942.0, 1877.0, 1867.0, 1868.0, 1842.0, 1833.0, 1804.0, 1795.0, 1746.0, 1842.0, 1869.0, 1858.0, 1968.0, 2014.0, 2005.0, 1997.0, 1972.0, 1966.0, 1998.0, 2054.0, 2033.0, 2109.0, 2072.0, 2060.0, 2041.0, 2037.0, 2026.0, 2016.0, 2009.0, 2023.0, 2089.0, 2078.0, 2052.0, 2199.0, 2195.0, 2171.0, 2148.0, 2126.0, 2094.0, 2228.0, 2210.0, 2195.0, 2241.0, 2228.0, 2224.0, 2184.0, 2145.0, 2140.0, 2128.0, 2119.0, 2108.0, 2104.0, 2091.0, 2063.0, 2152.0, 2200.0, 2185.0, 2311.0, 2285.0, 2342.0, 2336.0, 2318.0, 2342.0, 2333.0, 2321.0, 2399.0, 2435.0, 2421.0, 2418.0, 2383.0, 2387.0, 2383.0, 2351.0, 2330.0, 2315.0, 2377.0, 2369.0, 2364.0, 2342.0, 2333.0, 2325.0, 2331.0, 2314.0, 2286.0, 2255.0, 2285.0, 2360.0, 2404.0, 2379.0, 2372.0, 2368.0, 2364.0, 2332.0, 2314.0, 2301.0, 2364.0, 2369.0, 2350.0, 2338.0, 2385.0, 2426.0, 2406.0, 2392.0, 2380.0, 2390.0, 2381.0, 2372.0, 2340.0, 2311.0, 2294.0, 2266.0, 2256.0, 2232.0, 2217.0, 2194.0, 2184.0, 2180.0, 2280.0, 2238.0, 2238.0, 2230.0, 2251.0, 2274.0, 2332.0, 2325.0, 2312.0, 2301.0, 2347.0, 2338.0, 2309.0, 2290.0, 2277.0, 2274.0, 2315.0, 2361.0, 2373.0, 2366.0, 2381.0, 2402.0, 2395.0, 2385.0, 2376.0, 2333.0, 2322.0, 2305.0, 2275.0, 2265.0, 2254.0, 2268.0, 2259.0, 2254.0, 2248.0, 2282.0, 2278.0, 2328.0, 2303.0, 2343.0, 2335.0, 2349.0, 2411.0, 2397.0, 2380.0, 2366.0, 2358.0, 2350.0, 2371.0, 2354.0, 2300.0, 2260.0, 2252.0, 2237.0, 2241.0, 2360.0, 2354.0, 2333.0, 2333.0, 2512.0, 2504.0, 2540.0, 2630.0, 2704.0, 2693.0, 2680.0, 2729.0, 2707.0, 2761.0, 2754.0, 2762.0, 2821.0, 2878.0, 2873.0, 2847.0, 2876.0, 2867.0, 2879.0, 2964.0], "yearly": {"2018": {"n": 50, "mean": 9.6}, "2019": {"n": 52, "mean": 2.2}, "2020": {"n": 62, "mean": 12.1}, "2021": {"n": 58, "mean": 4.7}, "2022": {"n": 49, "mean": 0.9}, "2023": {"n": 56, "mean": 8.0}, "2024": {"n": 49, "mean": 6.6}, "2025": {"n": 62, "mean": -1.0}, "2026": {"n": 33, "mean": 18.1}}, "gate": [{"k": 40, "take_n": 341, "take": 6.1, "skip_n": 90, "skip": 3.9}, {"k": 80, "take_n": 344, "take": 5.0, "skip_n": 47, "skip": 13.0}], "halves": {"old_mean": 7.2, "old_win": 36, "new_mean": 5.4, "new_win": 32}, "stat": {"rho": 0.03, "rho_p": 0.51, "slope": 0.28, "slope_p": 0.74}};
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const S=(t,a)=>{const e=document.createElementNS("http://www.w3.org/2000/svg",t);for(const k in a)e.setAttribute(k,a[k]);return e};
+const tip=document.getElementById("tip");
+function tipOn(el,html){el.addEventListener("mousemove",e=>{tip.innerHTML=html;tip.style.opacity=1;
+  let x=e.clientX+14;if(x+tip.offsetWidth>innerWidth-8)x=e.clientX-tip.offsetWidth-14;
+  tip.style.left=x+"px";tip.style.top=(e.clientY+14)+"px";});
+  el.addEventListener("mouseleave",()=>tip.style.opacity=0);}
+
+function roll(){
+  const el=document.getElementById("roll"); el.innerHTML="";
+  const W=1040,H=280,pL=48,pR=14,pT=16,pB=28;
+  const pts=D.roll.map((v,i)=>({v,i})).filter(p=>p.v!=null);
+  const n=D.roll.length;
+  const lo=Math.min(...pts.map(p=>p.v),-2), hi=Math.max(...pts.map(p=>p.v),2);
+  const X=i=>pL+i/(n-1)*(W-pL-pR), Y=v=>H-pB-(v-lo)/(hi-lo)*(H-pT-pB);
+  const svg=S("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Rolling edge"});
+  // old/new half band
+  const mid=Math.floor(n/2);
+  svg.appendChild(S("rect",{x:X(0),y:pT,width:X(mid)-X(0),height:H-pT-pB,fill:css("--line"),opacity:.28}));
+  const oh=S("text",{x:X(mid/2),y:pT+13,"font-size":10.5,fill:css("--faint"),"text-anchor":"middle"});oh.textContent="OLD HALF +7.2 bps";svg.appendChild(oh);
+  const nh=S("text",{x:X(mid+(n-mid)/2),y:pT+13,"font-size":10.5,fill:css("--faint"),"text-anchor":"middle"});nh.textContent="NEW HALF +5.4 bps";svg.appendChild(nh);
+  [-2,0,5,10,15].forEach(v=>{ if(v>=lo&&v<=hi){svg.appendChild(S("line",{x1:pL,y1:Y(v),x2:W-pR,y2:Y(v),stroke:css("--line"),"stroke-width":v===0?1.4:1}));
+    const t=S("text",{x:pL-6,y:Y(v)+4,"font-size":10,fill:css("--faint"),"text-anchor":"end"});t.textContent=(v>0?"+":"")+v;svg.appendChild(t);}});
+  // year ticks
+  let lastY="";
+  D.dates.forEach((d,i)=>{const y=d.slice(0,4); if(y!==lastY){lastY=y;
+    const t=S("text",{x:X(i),y:H-9,"font-size":10,fill:css("--faint"),"text-anchor":"middle"});t.textContent=y;svg.appendChild(t);}});
+  const path=pts.map(p=>`${X(p.i).toFixed(1)},${Y(p.v).toFixed(1)}`).join(" ");
+  svg.appendChild(S("polyline",{points:path,fill:"none",stroke:css("--pos"),"stroke-width":2.2}));
+  // flat trend line (near-zero slope) to underline "no trend"
+  const yfit=v=>Y(7.2+ D.stat.slope/252*(v));  // illustrative near-flat
+  el.appendChild(svg);
+}
+
+function yearly(){
+  const el=document.getElementById("yearly"); el.innerHTML="";
+  const W=520,H=230,pL=42,pR=12,pT=16,pB=28;
+  const ys=Object.keys(D.yearly); const vals=ys.map(y=>D.yearly[y].mean);
+  const lo=Math.min(0,...vals)-2, hi=Math.max(...vals)+2;
+  const Y=v=>H-pB-(v-lo)/(hi-lo)*(H-pT-pB);
+  const slot=(W-pL-pR)/ys.length, bw=slot-8;
+  const svg=S("svg",{viewBox:`0 0 ${W} ${H}`});
+  [0,10].forEach(v=>{svg.appendChild(S("line",{x1:pL,y1:Y(v),x2:W-pR,y2:Y(v),stroke:css("--line"),"stroke-width":v===0?1.4:1}));
+    const t=S("text",{x:pL-6,y:Y(v)+4,"font-size":10,fill:css("--faint"),"text-anchor":"end"});t.textContent=(v>0?"+":"")+v;svg.appendChild(t);});
+  ys.forEach((y,i)=>{
+    const v=D.yearly[y].mean, x=pL+i*slot+4, col=v>=0?css("--pos"):css("--neg");
+    const r=S("rect",{x,y:Math.min(Y(0),Y(v)),width:bw,height:Math.max(2,Math.abs(Y(v)-Y(0))),fill:col,rx:2});
+    tipOn(r,`<div class="h">${y} · ${D.yearly[y].n} trades</div>mean <b>${v>0?"+":""}${v.toFixed(1)} bps</b>`);
+    svg.appendChild(r);
+    if(i%2===0){const t=S("text",{x:x+bw/2,y:H-9,"font-size":9.5,fill:css("--faint"),"text-anchor":"middle"});t.textContent="'"+y.slice(2);svg.appendChild(t);}
+  });
+  el.appendChild(svg);
+}
+
+function gate(){
+  const el=document.getElementById("gate"); el.innerHTML="";
+  const W=520,H=230,pL=42,pR=12,pT=20,pB=40;
+  const g=D.gate; const hi=15;
+  const Y=v=>H-pB-v/hi*(H-pT-pB);
+  const svg=S("svg",{viewBox:`0 0 ${W} ${H}`});
+  [0,5,10,15].forEach(v=>{svg.appendChild(S("line",{x1:pL,y1:Y(v),x2:W-pR,y2:Y(v),stroke:css("--line")}));
+    const t=S("text",{x:pL-6,y:Y(v)+4,"font-size":10,fill:css("--faint"),"text-anchor":"end"});t.textContent="+"+v;svg.appendChild(t);});
+  const slot=(W-pL-pR)/g.length, bw=46;
+  g.forEach((r,i)=>{
+    const x0=pL+i*slot+(slot-2*bw-8)/2;
+    [[r.take,css("--pos"),"TAKEN",x0,r.take_n],[r.skip,css("--hi"),"SKIPPED",x0+bw+8,r.skip_n]].forEach(([v,col,nm,x,nn])=>{
+      const rr=S("rect",{x,y:Y(v),width:bw,height:H-pB-Y(v),fill:col,rx:3});
+      tipOn(rr,`<div class="h">gate K=${r.k} · ${nm} · n=${nn}</div>mean <b>+${v} bps</b>`);
+      svg.appendChild(rr);
+      const t=S("text",{x:x+bw/2,y:Y(v)-5,"font-size":10,fill:col,"text-anchor":"middle","font-weight":"700"});t.textContent="+"+v;svg.appendChild(t);
+      const l=S("text",{x:x+bw/2,y:H-24,"font-size":9,fill:css("--faint"),"text-anchor":"middle"});l.textContent=nm;svg.appendChild(l);});
+    const lab=S("text",{x:x0+bw+4,y:H-9,"font-size":10.5,fill:css("--dim"),"text-anchor":"middle"});lab.textContent="trailing "+r.k+" trades";svg.appendChild(lab);
+  });
+  const cap=S("text",{x:W-pR,y:pT-4,"font-size":10.5,fill:css("--hitext"),"text-anchor":"end"});
+  cap.textContent="skipped > taken = the gate hurts";svg.appendChild(cap);
+  el.appendChild(svg);
+}
+
+function renderAll(){roll();yearly();gate();}
+renderAll();
+new MutationObserver(renderAll).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+</script>
+</body></html>
