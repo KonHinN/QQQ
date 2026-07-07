@@ -1,0 +1,11 @@
+variant,n,mean_bps,win_pct,pos_years
+BASELINE,244,5.95,33.2,4/5
+ENTRY pullback-to-VWAP,244,10.22,38.1,5/5
+EXIT flat 14:30,244,3.04,35.7,4/5
+EXIT flat 15:00,244,3.67,34.4,3/5
+TRAIL breakeven@+MFE,244,5.05,30.7,3/5
+TRAIL chandelier(kATR),244,-0.01,37.3,3/5
+GIVEBACK 33% of peak,244,0.21,48.8,3/5
+GIVEBACK 50% of peak,244,0.9,45.1,3/5
+PROFIT target @P80 MFE,244,3.76,34.0,4/5
+PM-HINT 1.5x gap-up,244,6.54,33.2,4/5
