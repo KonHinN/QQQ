@@ -1,0 +1,8 @@
+skip_if,n_skip,mean_skipped,mean_kept,diff,yrs_skip_helps
+opex,7,-25.2,8.3,33.5,-
+fomc_day,3,-14.9,7.6,22.5,-
+tight_vwap,74,5.6,8.1,2.5,3/4
+high_vol,70,8.4,6.7,-1.7,2/3
+monday,45,15.6,5.2,-10.4,0/3
+extended,74,14.4,3.7,-10.7,2/4
+gap_crash,38,24.0,3.8,-20.2,1/4
