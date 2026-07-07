@@ -1,0 +1,5 @@
+variant,n,mean_bps,win_pct,pos_years
+V0 frozen-long,204,0.0,49.0,3/5
+V1 modern-exit,204,0.4,23.0,4/5
+V2 +structural,196,0.5,23.0,4/5
+ELH_ref (incumbent),425,3.4,29.9,4/5
