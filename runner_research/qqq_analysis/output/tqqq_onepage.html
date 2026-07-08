@@ -1,0 +1,200 @@
+<!doctype html><html><head><meta charset="utf-8"></head><body>
+<title>TQQQ Early-Low-Hold — One-Page Playbook</title>
+<style>
+:root{
+  --bg:#0b0e11; --panel:#12161c; --line:#1e2630; --ink:#c9d1d9; --dim:#7d8895; --faint:#5c6773;
+  --pos:#26a69a; --neg:#ef5350; --hi:#cb791d; --hitext:#ffb74d; --neu:#7d8895;
+  --pos-soft:rgba(38,166,154,.13); --neg-soft:rgba(239,83,80,.10); --hi-soft:rgba(203,121,29,.14);
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f2f4f5; --panel:#fbfcfd; --line:#dde3e8; --ink:#1c2530; --dim:#5f6b76; --faint:#8a949d;
+    --pos:#0d8f7c; --neg:#c9403d; --hi:#a8690f; --hitext:#a8690f; --neu:#66717c;
+    --pos-soft:rgba(13,143,124,.10); --neg-soft:rgba(201,64,61,.08); --hi-soft:rgba(168,105,15,.12); }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0e11; --panel:#12161c; --line:#1e2630; --ink:#c9d1d9; --dim:#7d8895; --faint:#5c6773;
+  --pos:#26a69a; --neg:#ef5350; --hi:#cb791d; --hitext:#ffb74d; --neu:#7d8895;
+  --pos-soft:rgba(38,166,154,.13); --neg-soft:rgba(239,83,80,.10); --hi-soft:rgba(203,121,29,.14);
+}
+:root[data-theme="light"]{
+  --bg:#f2f4f5; --panel:#fbfcfd; --line:#dde3e8; --ink:#1c2530; --dim:#5f6b76; --faint:#8a949d;
+  --pos:#0d8f7c; --neg:#c9403d; --hi:#a8690f; --hitext:#a8690f; --neu:#66717c;
+  --pos-soft:rgba(13,143,124,.10); --neg-soft:rgba(201,64,61,.08); --hi-soft:rgba(168,105,15,.12); }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:ui-monospace,"SF Mono","Cascadia Code",Consolas,Menlo,monospace;
+  font-variant-numeric:tabular-nums;line-height:1.4;padding:24px 3vw 40px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.kicker{color:var(--hitext);letter-spacing:3px;font-size:11px;text-transform:uppercase}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap}
+h1{font-size:clamp(23px,3.6vw,33px);margin:2px 0 0;letter-spacing:-.5px}
+h1 .x3{color:var(--hitext)}
+.sub{color:var(--dim);font-size:12px;margin-top:3px}
+.badge{border:1px solid var(--pos);color:var(--pos);border-radius:999px;padding:5px 14px;
+  font-size:11px;letter-spacing:1.5px;background:var(--pos-soft);white-space:nowrap}
+.ribbon{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 18px 8px}
+svg{width:100%;height:auto;display:block} svg text{font-family:inherit}
+.grid{display:grid;grid-template-columns:1.12fr 1fr 1fr;gap:11px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px;border-top:3px solid var(--edge,var(--line))}
+.card h2{font-size:12px;margin:0 0 9px;letter-spacing:2px;color:var(--dim);text-transform:uppercase}
+.check{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.check:last-of-type{border-bottom:0}
+.box{width:19px;height:19px;border:2px solid var(--pos);border-radius:5px;flex:none;color:var(--pos);font-size:12px;line-height:15px;text-align:center;font-weight:700}
+.check small{display:block;color:var(--faint);font-size:10.5px;margin-top:1px}
+.then{margin-top:9px;background:var(--pos-soft);border:1px solid var(--pos);border-radius:8px;padding:8px 12px;font-weight:700;font-size:13px;color:var(--pos);text-align:center}
+.rule{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:12.5px}
+.rule:last-child{border-bottom:0}
+.rule .k{color:var(--dim)} .rule .v{font-weight:700;text-align:right}
+.v.pos{color:var(--pos)} .v.neg{color:var(--neg)} .v.hi{color:var(--hitext)}
+.tag{font-size:9px;letter-spacing:1px;background:var(--pos-soft);color:var(--pos);border:1px solid var(--pos);border-radius:4px;padding:1px 4px}
+.sizedial{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:2px}
+.sz{border:1px solid var(--line);border-radius:9px;padding:9px 8px;text-align:center}
+.sz.rec{border-color:var(--hi);background:var(--hi-soft)}
+.sz .p{font-size:16px;font-weight:700}
+.sz .r{font-size:15px;font-weight:700;color:var(--pos);margin-top:2px}
+.sz .d{font-size:10px;color:var(--neg);margin-top:1px}
+.sz .l{font-size:9px;color:var(--faint);text-transform:uppercase;margin-top:2px}
+.ex2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:860px){.ex2{grid-template-columns:1fr}}
+.exhead{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:var(--ink);margin-bottom:2px}
+.exhead .r{font-weight:700}
+.exleg{display:flex;gap:16px;font-size:11px;color:var(--faint);margin:-2px 0 6px}
+.exleg i{font-style:normal}
+.donts{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:9px}
+.dont{border:1px solid var(--line);border-left:3px solid var(--neg);border-radius:9px;padding:8px 13px;font-size:12px;background:var(--neg-soft)}
+.dont b{color:var(--neg);display:block;font-size:11px;letter-spacing:1px;margin-bottom:2px}
+.foot{color:var(--faint);font-size:11px;border-top:1px solid var(--line);padding-top:9px}
+.foot b{color:var(--dim)}
+#tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:11.5px;color:var(--ink);opacity:0;z-index:9;box-shadow:0 4px 18px rgba(0,0,0,.35)}
+#tip .h{color:var(--dim);font-size:10.5px}
+@media (prefers-reduced-motion:no-preference){ #tip{transition:opacity .1s} }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="kicker">watch QQQ · trade TQQQ · intraday long · flat every night</div>
+      <h1>TQQQ EARLY-LOW-HOLD <span class="x3">×3</span></h1>
+      <div class="sub">same setup as QQQ, 3× the swing · one decision at 11:00 ET · no overnight, no decay</div>
+    </div>
+    <div class="badge">$100k → $338k · 2018–2026 · 9/9 YRS</div>
+  </header>
+
+  <div class="ribbon" id="ribbon"></div>
+
+  <div class="grid">
+    <div class="card" style="--edge:var(--pos)">
+      <h2>At 11:00 — the setup (read on QQQ)</h2>
+      <div class="check"><span class="box">1</span><span>day's low set <b>before 10:00</b> &amp; still holds</span></div>
+      <div class="check"><span class="box">2</span><span>price <b>above session VWAP</b></span></div>
+      <div class="check"><span class="box">3</span><span>session low <b>above the premarket low</b></span></div>
+      <div class="then">ALL 3 ✓ → BUY TQQQ · else NO TRADE</div>
+    </div>
+
+    <div class="card" style="--edge:var(--hi)">
+      <h2>The trade (on TQQQ)</h2>
+      <div class="rule"><span class="k">entry <span class="tag">VWAP PULL</span></span><span class="v pos" style="font-size:11.5px">limit at VWAP,<br>market by 11:30</span></div>
+      <div class="rule"><span class="k">stop</span><span class="v neg">1-min close &lt; VWAP</span></div>
+      <div class="rule"><span class="k">target</span><span class="v hi">none — let it run</span></div>
+      <div class="rule"><span class="k">exit</span><span class="v">15:57 flat, always</span></div>
+      <div class="rule"><span class="k">skip</span><span class="v neg">big-body yest · FOMC</span></div>
+    </div>
+
+    <div class="card" style="--edge:var(--neg)">
+      <h2>Size for the drawdown ⚠</h2>
+      <div class="sizedial">
+        <div class="sz"><div class="p">25%</div><div class="r">+3.7%</div><div class="d">−1.8% DD</div><div class="l">cautious</div></div>
+        <div class="sz rec"><div class="p">50%</div><div class="r">+7.6%</div><div class="d">−3.5% DD</div><div class="l">balanced ★</div></div>
+        <div class="sz"><div class="p">100%</div><div class="r">+15.4%</div><div class="d">−6.9% DD</div><div class="l">full send</div></div>
+      </div>
+      <div style="font-size:10.5px;color:var(--faint);margin-top:8px;line-height:1.4">deploy = % of account in the (already 3×) trade · CAGR / max drawdown, 2018–2026 · 3× cuts both ways</div>
+    </div>
+  </div>
+
+  <div class="card" style="--edge:var(--line)">
+    <h2>What it looks like — real TQQQ days (3× synthetic, 2022)</h2>
+    <div class="exleg"><i style="color:var(--ink)">— TQQQ price</i><i>--- session VWAP</i><i style="color:var(--pos)">▮ in the trade</i></div>
+    <div class="ex2">
+      <div><div class="exhead"><span>2022-10-13 · CPI reversal · the runner</span><span class="r" style="color:var(--pos)">+13.0%</span></div><div id="ex_win"></div></div>
+      <div><div class="exhead"><span>2022-06-23 · the stop</span><span class="r" style="color:var(--neg)">−1.6%</span></div><div id="ex_stop"></div></div>
+    </div>
+  </div>
+
+  <div class="donts">
+    <div class="dont"><b>✕ NEVER HOLD OVERNIGHT</b>flat every night — this is what dodges the 3× decay &amp; gaps</div>
+    <div class="dont"><b>✕ NO PROFIT TARGET / TRAILING</b>tested — all cut the fat tail that pays</div>
+    <div class="dont"><b>✕ NO SHORTS, NO IWM</b>long-only; edge is QQQ/SPY-family</div>
+    <div class="dont"><b>✕ DON'T OVERSIZE</b>a stop is ~3× wider — one bad day at 100% = −2%+</div>
+  </div>
+
+  <div class="foot"><b>Why trust it:</b> same setup validated 2018–2026 (dev/val), 9/9 years positive on TQQQ incl. the 2022 bear ·
+    flat-every-night avoids the −80% buy&amp;hold drawdown · +27 bps/trade net (vs +11 on QQQ) · synthetic 3×, 8 bps cost assumed ·
+    real fills differ — <b>paper-trade before capital</b>.</div>
+</div>
+<div id="tip"></div>
+
+<script>
+const DAYS = {"win": {"date": "2022-10-13", "close": [255.45, 255.03, 252.61, 254.28, 255.93, 254.1, 252.79, 253.75, 254.76, 254.1, 252.79, 255.76, 256.86, 255.27, 254.8, 254.98, 257.55, 257.86, 257.92, 259.16, 260.1, 259.12, 261.56, 262.5, 260.78, 259.98, 259.64, 259.67, 259.99, 261.59, 261.74, 261.91, 261.16, 261.09, 263.24, 264.22, 263.21, 262.38, 265.08, 265.32, 263.88, 264.59, 265.72, 265.96, 267.27, 266.67, 266.37, 266.48, 265.23, 263.7, 263.21, 263.82, 264.43, 263.31, 263.12, 262.41, 261.22, 260.89, 261.41, 261.25, 262.93, 262.53, 263.76, 262.9, 262.14, 261.92, 261.86, 263.97, 263.1, 264.0, 263.79, 265.23, 263.61, 264.83, 264.02, 265.72, 265.22, 265.54, 265.45, 266.23, 265.08, 264.13, 264.34, 263.88, 265.45, 266.09, 267.41, 266.59, 265.54, 264.73, 264.19, 264.31, 263.97, 264.8, 266.59, 267.82, 269.1, 270.84, 271.18, 273.15, 271.82, 272.34, 272.87, 274.22, 275.36, 274.44, 277.0, 281.62, 281.3, 281.11, 290.12, 286.54, 287.68, 283.77, 283.86, 282.0, 282.93, 283.8, 284.35, 284.86, 285.54, 284.15, 283.8, 284.74, 284.8, 286.87, 288.59, 288.78, 294.04, 294.91, 299.43, 295.51, 294.72, 292.59, 292.18, 289.83, 292.02, 291.36, 291.0, 290.25, 289.01, 290.02, 292.64, 291.66, 291.82, 291.36, 289.43, 291.4, 291.46, 291.13, 291.89, 291.26, 293.96, 293.33, 293.59, 290.9, 292.31, 290.9, 291.04, 290.41, 288.95, 287.19, 287.03, 287.03, 287.35, 288.33, 285.91, 285.09, 284.93, 285.28, 284.41, 284.76, 284.96, 286.57, 285.96, 285.8, 286.45, 285.9, 285.73, 285.12, 285.7, 285.93, 286.67, 286.41, 286.54, 286.69, 285.6, 285.67, 286.61, 285.4, 285.9, 287.71, 287.61, 288.78, 288.59, 287.32, 288.0, 286.93, 287.84, 288.86, 289.01, 289.73, 289.76, 289.08, 287.94, 288.57, 287.68, 287.83, 288.57, 288.64, 289.4, 289.21, 290.87, 291.56, 291.95, 291.95, 290.64, 291.36, 291.26, 290.41, 290.94, 290.9, 290.74, 289.47, 290.32, 290.87, 291.07, 291.1, 291.23, 291.72, 293.66, 294.22, 294.85, 294.85, 295.11, 294.6, 295.11, 296.67, 297.07, 296.04, 297.2, 296.85, 297.86, 298.46, 299.29, 298.62, 297.33, 298.13, 297.53, 297.6, 297.13, 297.0, 297.46, 296.6, 295.87, 294.68, 295.57, 295.11, 295.87, 295.97, 296.44, 295.84, 295.91, 296.24, 296.37, 296.27, 295.71, 296.27, 296.4, 296.4, 295.08, 296.2, 295.64, 295.24, 295.94, 295.97, 296.27, 294.62, 295.44, 294.95, 295.34, 294.22, 294.45, 294.75, 294.65, 295.54, 295.18, 294.75, 294.68, 295.08, 294.98, 294.88, 295.21, 295.13, 294.55, 293.76, 292.77, 291.61, 292.02, 291.56, 292.74, 293.0, 292.64, 292.64, 292.97, 293.15, 293.72, 294.95, 294.75, 294.98, 294.58, 294.78, 294.32, 295.61, 295.84, 295.81, 295.48, 295.9, 297.03, 296.44, 296.6, 296.55, 297.15, 297.03, 297.9, 297.86, 298.17, 299.09, 300.29, 299.29, 297.86, 298.13, 298.26, 298.39, 298.16, 298.87, 299.91, 301.0, 301.45, 301.97, 301.9, 301.95, 301.6, 300.8, 300.19, 299.69, 301.43, 301.03, 300.66, 300.23, 298.63, 298.87, 298.99, 299.09, 298.86, 299.06, 298.96, 298.88, 298.26, 298.13, 298.43, 299.83, 298.46, 296.04, 296.6, 296.37, 296.25, 295.11, 296.47, 296.77, 296.53, 296.82, 296.85, 297.66, 298.16, 298.23, 298.96, 299.16, 298.96, 298.53, 298.49, 299.06, 300.51, 300.53, 299.56, 298.79, 298.16, 298.59, 298.43, 297.46], "vwap": [254.61, 254.61, 254.44, 254.3, 254.42, 254.44, 254.33, 254.27, 254.27, 254.25, 254.19, 254.27, 254.4, 254.46, 254.47, 254.48, 254.59, 254.7, 254.93, 255.05, 255.26, 255.37, 255.53, 255.81, 256.03, 256.14, 256.23, 256.29, 256.34, 256.41, 256.54, 256.64, 256.72, 256.78, 256.96, 257.17, 257.36, 257.58, 257.81, 257.96, 258.13, 258.25, 258.38, 258.59, 258.72, 258.83, 258.97, 259.08, 259.22, 259.33, 259.53, 259.59, 259.64, 259.75, 259.77, 259.8, 259.84, 259.85, 259.86, 259.89, 259.91, 259.94, 259.97, 259.99, 260.0, 260.02, 260.05, 260.11, 260.12, 260.14, 260.18, 260.23, 260.25, 260.28, 260.3, 260.34, 260.4, 260.47, 260.5, 260.54, 260.6, 260.65, 260.67, 260.69, 260.71, 260.75, 260.85, 260.98, 261.0, 261.04, 261.06, 261.07, 261.09, 261.11, 261.15, 261.19, 261.31, 261.55, 261.65, 261.88, 261.99, 262.06, 262.11, 262.26, 262.37, 262.47, 262.61, 263.23, 263.61, 263.79, 264.54, 265.42, 265.71, 266.02, 266.23, 266.42, 266.56, 266.67, 266.77, 266.86, 267.0, 267.1, 267.17, 267.28, 267.34, 267.5, 267.75, 267.94, 268.33, 269.13, 269.55, 269.85, 270.07, 270.3, 270.42, 270.55, 270.68, 270.81, 270.86, 270.97, 271.07, 271.13, 271.23, 271.3, 271.34, 271.41, 271.5, 271.56, 271.61, 271.66, 271.73, 271.82, 272.04, 272.11, 272.15, 272.24, 272.4, 272.46, 272.52, 272.57, 272.63, 272.74, 272.79, 272.84, 272.94, 272.99, 273.03, 273.07, 273.11, 273.18, 273.22, 273.27, 273.31, 273.36, 273.4, 273.44, 273.48, 273.5, 273.52, 273.54, 273.56, 273.59, 273.66, 273.68, 273.71, 273.74, 273.76, 273.77, 273.8, 273.87, 273.89, 273.93, 273.95, 273.99, 274.02, 274.04, 274.05, 274.07, 274.08, 274.12, 274.15, 274.19, 274.23, 274.26, 274.29, 274.32, 274.34, 274.36, 274.37, 274.39, 274.41, 274.45, 274.5, 274.56, 274.59, 274.62, 274.65, 274.67, 274.68, 274.76, 274.77, 274.78, 274.79, 274.81, 274.82, 274.84, 274.85, 274.87, 274.88, 274.92, 274.97, 275.03, 275.13, 275.51, 275.59, 275.63, 275.67, 275.75, 275.81, 275.87, 276.02, 276.05, 276.11, 276.17, 276.24, 276.31, 276.38, 276.5, 276.54, 276.59, 276.61, 276.66, 276.7, 276.75, 276.79, 276.84, 276.87, 276.9, 276.93, 276.95, 276.97, 277.03, 277.05, 277.16, 277.18, 277.2, 277.23, 277.27, 277.32, 277.39, 277.42, 277.45, 277.48, 277.5, 277.52, 277.56, 277.59, 277.61, 277.63, 277.66, 277.69, 277.7, 277.75, 277.78, 277.8, 277.83, 277.85, 277.86, 277.88, 277.91, 277.95, 277.97, 278.0, 278.02, 278.04, 278.08, 278.1, 278.13, 278.16, 278.17, 278.29, 278.31, 278.32, 278.33, 278.38, 278.43, 278.49, 278.55, 278.59, 278.66, 278.68, 278.69, 278.7, 278.72, 278.75, 278.77, 278.78, 278.8, 278.82, 278.86, 278.87, 278.89, 278.9, 278.93, 278.98, 279.06, 279.09, 279.19, 279.26, 279.31, 279.46, 279.5, 279.53, 279.55, 279.57, 279.6, 279.65, 279.82, 279.9, 280.0, 280.07, 280.15, 280.31, 280.35, 280.45, 280.48, 280.52, 280.54, 280.57, 280.59, 280.7, 280.73, 280.76, 280.78, 280.79, 280.83, 280.87, 280.9, 280.94, 281.01, 281.05, 281.12, 281.28, 281.33, 281.35, 281.37, 281.4, 281.44, 281.47, 281.5, 281.52, 281.54, 281.56, 281.59, 281.63, 281.65, 281.7, 281.73, 281.79, 281.83, 281.88, 281.92, 281.98, 282.02, 282.09, 282.17, 282.23, 282.28, 282.36, 282.53], "lod_min": 3, "bps": 1302}, "stop": {"date": "2022-06-23", "close": [283.5, 281.02, 281.46, 281.29, 280.18, 277.47, 277.84, 276.42, 275.65, 275.86, 278.13, 276.69, 278.43, 279.05, 277.78, 276.33, 278.64, 278.64, 278.53, 278.96, 277.45, 276.82, 274.48, 275.24, 275.21, 276.8, 277.96, 278.31, 281.17, 281.49, 282.75, 281.97, 282.42, 281.85, 282.27, 282.78, 283.98, 281.93, 280.15, 279.97, 280.87, 278.88, 278.08, 279.38, 279.86, 280.24, 281.32, 280.69, 280.76, 281.35, 282.54, 283.87, 283.05, 282.98, 282.72, 282.9, 281.41, 282.63, 281.88, 281.92, 281.55, 283.83, 282.63, 282.12, 282.09, 282.96, 282.33, 283.16, 282.9, 284.1, 286.18, 286.18, 285.91, 286.57, 285.51, 285.94, 286.45, 286.46, 286.51, 285.27, 285.24, 285.23, 286.18, 285.64, 285.82, 286.96, 286.97, 286.66, 287.05, 286.87, 286.25, 285.47, 285.0, 285.12, 284.1, 283.44, 283.92, 284.64, 284.01, 285.15, 285.61, 285.64, 286.5, 287.78, 287.42, 286.96, 287.69, 287.75, 287.72, 287.75, 286.9, 287.09, 287.12, 285.06, 285.82, 286.42, 286.27, 286.24, 286.54, 286.25, 285.94, 284.55, 284.61, 285.06, 284.7, 283.53, 282.96, 283.32, 283.16, 282.48, 283.02, 282.93, 282.99, 282.87, 283.77, 283.26, 283.26, 283.38, 283.83, 284.19, 284.34, 284.07, 284.34, 283.98, 283.58, 282.75, 283.41, 282.57, 282.21, 281.73, 281.46, 280.08, 279.29, 279.17, 278.25, 278.93, 279.64, 279.68, 278.7, 279.02, 278.7, 278.4, 279.14, 279.56, 279.75, 279.47, 279.56, 280.3, 281.29, 280.69, 281.42, 281.7, 281.1, 280.03, 280.75, 280.42, 280.46, 281.47, 280.37, 280.51, 280.84, 280.03, 279.66, 279.48, 278.85, 278.22, 278.22, 277.81, 277.15, 277.19, 277.57, 277.66, 277.63, 277.1, 277.48, 276.83, 276.3, 276.98, 278.1, 277.54, 277.25, 277.01, 276.8, 277.47, 277.31, 277.28, 277.53, 276.77, 276.48, 276.65, 275.85, 275.05, 275.12, 274.42, 275.27, 276.27, 276.98, 277.63, 277.51, 277.13, 277.3, 277.69, 278.03, 277.56, 277.21, 276.95, 277.47, 277.72, 277.36, 277.35, 276.8, 276.52, 277.07, 277.81, 277.04, 277.48, 276.88, 276.89, 276.6, 276.42, 277.31, 277.29, 277.57, 276.77, 277.5, 277.69, 277.6, 277.51, 276.35, 276.42, 276.27, 275.9, 275.33, 275.92, 276.2, 276.1, 276.95, 277.25, 277.07, 277.45, 278.31, 278.96, 278.39, 278.73, 278.96, 279.35, 279.23, 278.88, 279.11, 279.5, 279.23, 279.77, 279.97, 279.41, 279.2, 279.72, 279.83, 279.81, 279.38, 280.15, 279.83, 279.53, 279.92, 279.81, 279.38, 279.38, 279.68, 279.37, 278.91, 279.35, 278.88, 279.23, 279.71, 280.48, 280.21, 280.08, 280.39, 280.72, 281.52, 281.35, 281.58, 282.12, 282.75, 282.93, 283.01, 283.14, 282.99, 283.5, 283.71, 283.47, 283.06, 282.78, 282.86, 282.69, 282.66, 282.12, 282.0, 282.3, 282.72, 282.35, 282.9, 282.69, 282.51, 282.63, 282.74, 282.36, 282.75, 282.69, 283.02, 283.05, 282.66, 282.9, 283.23, 283.38, 283.62, 283.83, 284.55, 284.25, 284.22, 284.34, 284.43, 284.04, 284.85, 284.43, 284.88, 284.7, 284.61, 283.92, 283.08, 284.13, 284.19, 284.22, 284.24, 284.22, 283.8, 284.43, 284.61, 285.12, 285.39, 284.91, 285.79, 286.3, 286.84, 287.3, 287.57, 287.43, 286.6, 287.11, 286.15, 286.45, 287.87, 287.75, 287.78, 287.66, 287.06, 287.81, 288.24, 288.45, 288.3, 288.81, 289.33, 290.15, 288.75, 288.33, 287.45, 287.67, 287.55, 287.98, 288.21, 287.72], "vwap": [282.84, 282.63, 282.25, 282.13, 281.91, 281.36, 280.93, 280.51, 279.89, 279.59, 279.28, 279.12, 278.99, 278.99, 278.97, 278.8, 278.73, 278.72, 278.73, 278.74, 278.72, 278.69, 278.53, 278.37, 278.25, 278.18, 278.16, 278.17, 278.24, 278.32, 278.45, 278.55, 278.62, 278.68, 278.73, 278.79, 278.89, 278.94, 278.98, 279.0, 279.02, 279.03, 279.02, 279.02, 279.03, 279.04, 279.06, 279.07, 279.09, 279.1, 279.13, 279.19, 279.23, 279.28, 279.31, 279.35, 279.37, 279.39, 279.46, 279.48, 279.52, 279.56, 279.61, 279.65, 279.67, 279.71, 279.72, 279.74, 279.76, 279.79, 279.9, 279.99, 280.06, 280.12, 280.16, 280.2, 280.22, 280.25, 280.26, 280.34, 280.38, 280.42, 280.44, 280.46, 280.49, 280.54, 280.59, 280.65, 280.68, 280.7, 280.76, 280.81, 280.85, 280.87, 280.89, 280.91, 280.93, 280.95, 280.96, 280.98, 281.0, 281.03, 281.05, 281.11, 281.16, 281.23, 281.25, 281.28, 281.47, 281.49, 281.53, 281.56, 281.59, 281.63, 281.65, 281.67, 281.73, 281.75, 281.76, 281.77, 281.78, 281.81, 281.82, 281.83, 281.84, 281.85, 281.85, 281.86, 281.87, 281.87, 281.87, 281.88, 281.88, 281.89, 281.89, 281.9, 281.9, 281.9, 281.91, 281.93, 281.94, 281.95, 281.95, 281.96, 281.96, 281.97, 281.97, 281.97, 281.97, 281.97, 281.97, 281.96, 281.95, 281.94, 281.91, 281.88, 281.86, 281.85, 281.84, 281.82, 281.8, 281.79, 281.78, 281.77, 281.77, 281.76, 281.75, 281.75, 281.74, 281.74, 281.74, 281.74, 281.74, 281.73, 281.73, 281.72, 281.72, 281.72, 281.72, 281.71, 281.71, 281.71, 281.7, 281.7, 281.69, 281.68, 281.67, 281.65, 281.63, 281.62, 281.61, 281.59, 281.58, 281.57, 281.56, 281.54, 281.52, 281.5, 281.48, 281.46, 281.45, 281.44, 281.43, 281.39, 281.39, 281.38, 281.37, 281.36, 281.35, 281.34, 281.27, 281.24, 281.22, 281.2, 281.15, 281.12, 281.09, 281.07, 281.06, 281.05, 281.05, 281.04, 281.04, 281.02, 281.01, 281.0, 280.99, 280.99, 280.98, 280.97, 280.96, 280.96, 280.95, 280.94, 280.92, 280.91, 280.91, 280.89, 280.86, 280.85, 280.84, 280.84, 280.83, 280.83, 280.82, 280.81, 280.8, 280.8, 280.76, 280.74, 280.74, 280.73, 280.71, 280.7, 280.66, 280.65, 280.64, 280.64, 280.63, 280.62, 280.62, 280.61, 280.6, 280.6, 280.6, 280.59, 280.59, 280.59, 280.59, 280.59, 280.58, 280.58, 280.58, 280.58, 280.56, 280.56, 280.56, 280.56, 280.56, 280.56, 280.56, 280.55, 280.55, 280.54, 280.54, 280.54, 280.54, 280.54, 280.54, 280.53, 280.52, 280.52, 280.51, 280.51, 280.51, 280.51, 280.51, 280.51, 280.51, 280.52, 280.52, 280.52, 280.53, 280.53, 280.54, 280.54, 280.55, 280.55, 280.56, 280.57, 280.58, 280.58, 280.59, 280.59, 280.59, 280.6, 280.6, 280.6, 280.61, 280.61, 280.61, 280.62, 280.62, 280.62, 280.62, 280.63, 280.63, 280.63, 280.63, 280.64, 280.64, 280.65, 280.65, 280.66, 280.66, 280.67, 280.67, 280.68, 280.69, 280.69, 280.7, 280.7, 280.71, 280.71, 280.71, 280.76, 280.77, 280.77, 280.78, 280.78, 280.79, 280.79, 280.8, 280.8, 280.82, 280.83, 280.84, 280.85, 280.86, 280.87, 280.89, 280.91, 280.93, 280.95, 280.98, 281.01, 281.03, 281.04, 281.06, 281.08, 281.12, 281.14, 281.18, 281.19, 281.21, 281.23, 281.25, 281.29, 281.32, 281.35, 281.41, 281.46, 281.49, 281.52, 281.55, 281.57, 281.59, 281.61, 281.64, 281.73], "lod_min": 22, "bps": -158}};
+const CHECK_T=90, FLAT_T=387;
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const S=(t,a)=>{const e=document.createElementNS("http://www.w3.org/2000/svg",t);for(const k in a)e.setAttribute(k,a[k]);return e};
+const tip=document.getElementById("tip");
+const clk=t=>{const tot=570+t;return `${String(Math.floor(tot/60)).padStart(2,"0")}:${String(tot%60).padStart(2,"0")}`;};
+
+function ribbon(){
+  const el=document.getElementById("ribbon"); el.innerHTML="";
+  const W=1040,H=112,y=60,x0=30,x1=W-30;
+  const svg=S("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Session timeline"});
+  const mins=t=>{const[h,m]=t.split(":").map(Number);return h*60+m};
+  const X=t=>x0+(mins(t)-570)/(960-570)*(x1-x0);
+  const zone=(a,b,fill)=>svg.appendChild(S("rect",{x:X(a),y:y-12,width:X(b)-X(a),height:24,fill,rx:6}));
+  zone("09:30","10:00",css("--neg-soft")); zone("11:00","15:57",css("--pos-soft"));
+  svg.appendChild(S("line",{x1:x0,y1:y,x2:x1,y2:y,stroke:css("--line"),"stroke-width":2}));
+  const stops=[["09:30","","",css("--faint")],["10:00","low must be in","by here",css("--neg")],
+    ["11:00","CHECK → BUY TQQQ","the one decision",css("--pos")],["15:57","FLAT","no exceptions",css("--hitext")]];
+  for(const[t,top,bot,col]of stops){const x=X(t);
+    svg.appendChild(S("circle",{cx:x,cy:y,r:t==="11:00"?7:5,fill:col,stroke:css("--panel"),"stroke-width":2}));
+    const a=x>x1-60?"end":(x<x0+50?"start":"middle");
+    const tt=S("text",{x,y:y-22,"font-size":t==="11:00"?13:11.5,fill:col,"text-anchor":a,"font-weight":"700"});tt.textContent=top;svg.appendChild(tt);
+    const tm=S("text",{x,y:y+22,"font-size":10.5,fill:css("--faint"),"text-anchor":a});tm.textContent=t;svg.appendChild(tm);
+    if(bot){const b=S("text",{x,y:y+38,"font-size":10,fill:css("--dim"),"text-anchor":a});b.textContent=bot;svg.appendChild(b);}}
+  el.appendChild(svg);
+}
+
+function exChart(id, day, kind){
+  const el=document.getElementById(id); el.innerHTML="";
+  const W=520,H=200,pL=8,pR=8,pT=10,pB=22;
+  const c=day.close, v=day.vwap; let exitT=FLAT_T;
+  if(kind==="stop"){for(let t=CHECK_T+1;t<=FLAT_T;t++){if(c[t]<v[t]){exitT=t;break;}}}
+  const lo=Math.min(...c,...v), hi=Math.max(...c,...v), pad=(hi-lo)*0.06;
+  const X=t=>pL+t/389*(W-pL-pR), Y=p=>H-pB-(p-(lo-pad))/((hi+pad)-(lo-pad))*(H-pT-pB);
+  const svg=S("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":`${kind} day`});
+  svg.appendChild(S("rect",{x:X(CHECK_T),y:pT,width:X(exitT)-X(CHECK_T),height:H-pT-pB,fill:css(kind==="win"?"--pos-soft":"--neg-soft")}));
+  [[30,"10:00"],[90,"11:00"],[270,"14:00"]].forEach(([t,l])=>{
+    svg.appendChild(S("line",{x1:X(t),y1:pT,x2:X(t),y2:H-pB,stroke:css("--line"),"stroke-width":t===90?1.6:1}));
+    const tx=S("text",{x:X(t),y:H-7,"font-size":10,fill:css("--faint"),"text-anchor":"middle"});tx.textContent=l;svg.appendChild(tx);});
+  const pts=a=>a.map((p,t)=>`${X(t).toFixed(1)},${Y(p).toFixed(1)}`).join(" ");
+  svg.appendChild(S("polyline",{points:pts(v),fill:"none",stroke:css("--dim"),"stroke-width":1.3,"stroke-dasharray":"5,4",opacity:.85}));
+  svg.appendChild(S("polyline",{points:pts(c),fill:"none",stroke:css("--ink"),"stroke-width":1.8}));
+  const mark=(t,p,col,lab,dy)=>{svg.appendChild(S("circle",{cx:X(t),cy:Y(p),r:4.5,fill:col,stroke:css("--panel"),"stroke-width":2}));
+    if(lab){const a=X(t)<70?"start":(X(t)>W-70?"end":"middle");
+      const tx=S("text",{x:X(t),y:Y(p)+dy,"font-size":10.5,fill:col,"text-anchor":a,"font-weight":"700"});tx.textContent=lab;svg.appendChild(tx);}};
+  mark(day.lod_min, c[day.lod_min], css("--neg"), "low "+clk(day.lod_min), 18);
+  mark(CHECK_T, c[CHECK_T], css("--pos"), "BUY", -10);
+  mark(exitT, c[exitT], kind==="win"?css("--hitext"):css("--neg"), kind==="win"?"flat 15:57":"stop "+clk(exitT), -10);
+  const cross=S("line",{y1:pT,y2:H-pB,stroke:css("--faint"),"stroke-width":1,opacity:0});svg.appendChild(cross);
+  svg.addEventListener("mousemove",e=>{const r=svg.getBoundingClientRect();
+    const t=Math.max(0,Math.min(389,Math.round((e.clientX-r.left)/r.width*W/(W-pL-pR)*389)));
+    cross.setAttribute("x1",X(t));cross.setAttribute("x2",X(t));cross.setAttribute("opacity",.7);
+    tip.innerHTML=`<div class="h">${day.date} ${clk(t)}</div>TQQQ ${c[t].toFixed(2)} · vwap ${v[t].toFixed(2)}`;
+    tip.style.opacity=1;let x=e.clientX+14;if(x+tip.offsetWidth>innerWidth-8)x=e.clientX-tip.offsetWidth-14;
+    tip.style.left=x+"px";tip.style.top=(e.clientY+14)+"px";});
+  svg.addEventListener("mouseleave",()=>{cross.setAttribute("opacity",0);tip.style.opacity=0;});
+  el.appendChild(svg);
+}
+function renderAll(){ribbon();exChart("ex_win",DAYS.win,"win");exChart("ex_stop",DAYS.stop,"stop");}
+renderAll();
+new MutationObserver(renderAll).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+</script>
+</body></html>
