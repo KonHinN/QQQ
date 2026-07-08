@@ -1,0 +1,5 @@
+config,n,end_equity,total_ret_pct,cagr_pct,max_dd_pct,win_pct,profit_factor,avg_win_pct,avg_loss_pct,expectancy_bps,sharpe,best_pct,worst_pct,max_consec_loss
+deploy 25%,463,122913,22.9,2.5,-3.1,34.6,1.48,1.61,-0.57,18.0,0.99,8.0,-2.5,12.0
+deploy 50%,463,150285,50.3,4.9,-6.1,34.6,1.48,1.61,-0.57,18.0,0.99,8.0,-2.5,12.0
+deploy 100%,463,221222,121.2,9.8,-12.0,34.6,1.48,1.61,-0.57,18.0,0.99,8.0,-2.5,12.0
+"TQQQ buy&hold (real, split-adj)",2138,1187093,1087.1,33.8,-81.8,,,,,,,,,

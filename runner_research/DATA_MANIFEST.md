@@ -42,3 +42,12 @@ reproduce the frozen `oos_validate.py` self-test numbers.
 FILES = [Path(f"../qqq_full/QQQ_1min_{y}.csv") for y in range(2018, 2027)]  # 2026 = partial
 DEV, VAL = range(2018, 2022), range(2022, 2027)   # suggested split; 2025+2026 now real OOS
 ```
+
+## REAL TQQQ: `tqqq_full/` — TQQQ 1-min, 2018-01-02 → 2026-07-07 (added 2026-07-08)
+
+Same Alpaca SIP / raw / extended-hours format, one CSV per year. Verified: full year coverage,
+~248 complete RTH days/yr. **Four splits detected empirically (raw prices): 2018-05-24 3:1,
+2021-01-21 2:1, 2022-01-13 2:1, 2025-11-20 2:1** (README listed only one — trust the scan).
+Splits are overnight events: intraday trades unaffected; split-adjust only for B&H benchmarks.
+Synthetic-3x validation vs real fills: corr 0.9994, real +3.2 bps/trade better, TE ±6.1 bps —
+the synthetic model in tqqq_backtest.py was honest; tqqq_real_backtest.py is now canonical.
