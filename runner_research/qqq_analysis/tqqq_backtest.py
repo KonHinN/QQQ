@@ -46,16 +46,13 @@ RISKS = (0.25, 0.50, 1.00)
 
 
 def v2_trade(day) -> tuple[str, float]:
-    """Return (date, gross QQQ return) for the v2-managed trade on a firing day."""
-    c, lo, vw = day["c"], day["lo"], day["vw"]
+    """Return (date, gross QQQ return). Entry = MARKET at 11:00 (causal; the 'VWAP-pullback'
+    entry was retracted as look-ahead — see entry_recheck). Stop = 1-min close < VWAP; flat 15:57."""
+    c, vw = day["c"], day["vw"]
     n = len(c)
-    e_ix = 0
-    for t in range(0, min(30, n)):            # VWAP pullback entry by 11:30
-        if lo[t] <= vw[t]:
-            e_ix = t; break
-    entry = c[e_ix]
+    entry = c[0]                              # 11:00 close = market at 11:00
     exit_px = c[n - 1]
-    for t in range(e_ix + 1, n):
+    for t in range(1, n):
         if c[t] < vw[t]:
             exit_px = c[t]; break
     return day["date"], day["year"], exit_px / entry - 1
