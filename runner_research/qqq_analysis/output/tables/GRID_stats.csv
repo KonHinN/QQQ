@@ -1,0 +1,4 @@
+config,total_ret_pct,cagr_pct,max_dd_pct,approx_trades,end
+SYMMETRIC grid,-6.5,-0.8,-86.7,48898,93457
+LONG-ONLY grid,91.7,7.9,-31.0,19943,191693
+QQQ buy&hold,356.3,19.5,-37.5,1,456295
